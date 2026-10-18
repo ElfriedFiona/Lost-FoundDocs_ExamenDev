@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Matching.MatchDetailsPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Détails de la correspondance">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Détails de la correspondance" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+<comp:InfoBanner Kind="Neutral" Message="Simulation · données fictives, conservées uniquement pendant la session." />
+<VerticalStackLayout Spacing="16" IsVisible="{Binding HasMatch}">
+<Border Style="{StaticResource Card}">
+<VerticalStackLayout Spacing="8">
+<Label Text="{Binding Report.Title}" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding Report.Reference}" Style="{StaticResource Caption}" />
+<comp:StatusBadge Status="{Binding Report.Status}" />
+<Label Text="{Binding Report.DateLabelLong}" />
+<Label Text="{Binding Report.LocationLabel}" />
+</VerticalStackLayout>
+</Border>
+<Label Text="{Binding Match.ScoreLabel}" Style="{StaticResource SectionTitle}" />
+<ProgressBar Progress="{Binding Match.Progress}" ProgressColor="{StaticResource Primary}" />
+<Label Text="Indicateur interne de similarité fictif" Style="{StaticResource Caption}" />
+<Label Text="{Binding Match.EventDate, StringFormat='Date du document correspondant : {0:dd/MM/yyyy}'}" />
+<Button Text="Pourquoi cette correspondance ?" Command="{Binding ToggleCriteriaCommand}" Style="{StaticResource TextButton}"  />
+<Label Text="{Binding Criteria}" IsVisible="{Binding ShowCriteria}" />
+<comp:InfoBanner Kind="Info" Message="Le numéro et la date de naissance restent masqués. Aucune photo n’est partagée." />
+<comp:InfoBanner Kind="Info" IsVisible="{Binding IsDisputed}" Message="Merci pour votre signalement. Correspondance contestée, en attente de vérification simulée." />
+<Button Text="{Binding ContactText}" Command="{Binding ContactCommand}" Style="{StaticResource PrimaryButton}" IsVisible="{Binding CanContact}" />
+<Button Text="Signaler une erreur" Command="{Binding DisputeCommand}" Style="{StaticResource TextButton}" IsEnabled="{Binding CanDispute}" />
+</VerticalStackLayout>
+<VerticalStackLayout Spacing="12" IsVisible="{Binding IsUnavailable}">
+<Label Text="{Binding Report.StatusLabel}" Style="{StaticResource SectionTitle}" />
+<Label Text="Ce signalement ne dispose plus d’une correspondance active." />
+<Button Text="Voir mon signalement" Command="{Binding ReportCommand}" Style="{StaticResource SecondaryButton}" />
+</VerticalStackLayout>
+<VerticalStackLayout Spacing="16" IsVisible="{Binding NoMatch}">
+<Label Text="Aucun document compatible pour l’instant" Style="{StaticResource SectionTitle}" />
+<Label Text="Votre signalement reste en recherche. La recherche automatique réelle nécessitera le backend." />
+<Button Text="Voir mon signalement" Command="{Binding ReportCommand}" Style="{StaticResource PrimaryButton}"  />
+</VerticalStackLayout>
+<Button Text="Retour à l’accueil" Command="{Binding HomeCommand}" Style="{StaticResource SecondaryButton}"  />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

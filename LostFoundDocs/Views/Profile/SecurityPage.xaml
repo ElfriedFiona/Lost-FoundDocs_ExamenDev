@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Profile.SecurityPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Sécurité">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Sécurité" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<comp:InfoBanner Kind="Info" Message="Modification simulée, conservée uniquement en mémoire." />
+<comp:FormField LabelText="Mot de passe actuel" x:Name="CurrentPasswordInput" Text="{Binding CurrentPassword}" ErrorText="{Binding CurrentPasswordError}" IsPassword="True" />
+<comp:FormField LabelText="Nouveau mot de passe" x:Name="PasswordInput" Text="{Binding Password}" ErrorText="{Binding PasswordError}" IsPassword="True" />
+<comp:FormField LabelText="Confirmer le mot de passe" x:Name="ConfirmationInput" Text="{Binding Confirmation}" ErrorText="{Binding ConfirmationError}" IsPassword="True" />
+<Button Text="Modifier le mot de passe" Command="{Binding PasswordCommand}" Style="{StaticResource PrimaryButton}"  />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

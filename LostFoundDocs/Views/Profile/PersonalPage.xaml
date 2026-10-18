@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Profile.PersonalPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Informations personnelles">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Informations personnelles" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<comp:FormField LabelText="Nom complet" x:Name="NameInput" Text="{Binding Name}" ErrorText="{Binding NameError}" />
+<comp:FormField LabelText="E-mail (facultatif)" x:Name="EmailInput" Text="{Binding Email}" ErrorText="{Binding EmailError}" Keyboard="Email" />
+<Label Text="{Binding Phone}" />
+<Label Text="Le téléphone ne peut pas être modifié." Style="{StaticResource Caption}" />
+<Button Text="Enregistrer" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}"  />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

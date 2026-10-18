@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Declaration.DeclarationPage" x:Name="Root" Shell.NavBarIsVisible="False">
+<Grid RowDefinitions="Auto,*">
+<VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="{Binding Title}" BackCommand="{Binding BackCommand}" />
+<ProgressBar Progress="{Binding Progress}" ProgressColor="{StaticResource Primary}" />
+<Label Text="{Binding StepLabel}" Style="{StaticResource Caption}" />
+</VerticalStackLayout>
+<ScrollView Grid.Row="1" x:Name="FormScroll">
+<VerticalStackLayout Padding="16,8,16,24" Spacing="16" IsEnabled="{Binding IsNotBusy}">
+<comp:InfoBanner Kind="Neutral" Message="Mode démonstration · utilisez des informations fictives." />
+<VerticalStackLayout Spacing="12" IsVisible="{Binding ShowType}">
+<Label Text="Type de document" Style="{StaticResource FieldLabel}" />
+<Picker x:Name="TypeInput" Title="Sélectionnez un type" ItemsSource="{Binding Types}" ItemDisplayBinding="{Binding Label}" SelectedItem="{Binding SelectedType}" />
+<Label Text="{Binding Errors[Type]}" TextColor="{StaticResource ErrorText}" />
+<comp:FormField x:Name="CustomTitleInput" LabelText="Intitulé du document" Text="{Binding CustomTitle}" IsVisible="{Binding IsOther}" ErrorText="{Binding Errors[CustomTitle]}" />
+<Label Text="Environ 1 minute · aucun champ inutile" Style="{StaticResource Caption}" />
+</VerticalStackLayout>
+<VerticalStackLayout Spacing="16" IsVisible="{Binding ShowIdentity}">
+<Label Text="Informations d’identité" Style="{StaticResource SectionTitle}" />
+<comp:FormField x:Name="NameInput" LabelText="Nom complet" Text="{Binding Name}" HelperText="Tel qu’il apparaît sur le document. Pour une trouvaille : nom ou numéro requis." ErrorText="{Binding Errors[Name]}" />
+<Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsLost}">
+<Label Text="Ajouter la date de naissance (facultatif)" VerticalOptions="Center" />
+<Switch Grid.Column="1" IsToggled="{Binding HasBirthDate}" SemanticProperties.Description="Ajouter la date de naissance" />
+</Grid>
+<DatePicker x:Name="BirthInput" Date="{Binding BirthDate}" MaximumDate="{Binding Today}" IsVisible="{Binding HasBirthDate}" Format="dd MMM yyyy" />
+<Label Text="{Binding Errors[Birth]}" TextColor="{StaticResource ErrorText}" />
+<comp:FormField x:Name="NumberInput" LabelText="{Binding NumberLabel}" Text="{Binding Number}" IsOptional="True" BadgeText="{Binding NumberBadge}" HelperText="Masqué partout dans l’application" ErrorText="{Binding Errors[Number]}" />
+<comp:FormField LabelText="{Binding IssuerLabel}" Text="{Binding Issuer}" IsOptional="True" />
+</VerticalStackLayout>
+<VerticalStackLayout Spacing="16" IsVisible="{Binding ShowCircumstances}">
+<Label Text="Où et quand ?" Style="{StaticResource SectionTitle}" />
+<Label Text="Date de perte ou de découverte" Style="{StaticResource FieldLabel}" />
+<DatePicker x:Name="DateInput" Date="{Binding EventDate}" MaximumDate="{Binding Today}" Format="dd MMM yyyy" />
+<Label Text="{Binding Errors[Date]}" TextColor="{StaticResource ErrorText}" />
+<Label Text="Ville" Style="{StaticResource FieldLabel}" />
+<Picker x:Name="CityInput" Title="Choisir une ville" ItemsSource="{Binding Cities}" SelectedItem="{Binding City}" />
+<Label Text="{Binding Errors[City]}" TextColor="{StaticResource ErrorText}" />
+<comp:FormField x:Name="PlaceInput" LabelText="Lieu, même approximatif" Text="{Binding Place}" ErrorText="{Binding Errors[Place]}" />
+<FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding Places}">
+<BindableLayout.ItemTemplate>
+<DataTemplate>
+<Button Text="{Binding .}" Command="{Binding BindingContext.PlaceCommand, Source={x:Reference Root}}" CommandParameter="{Binding .}" Style="{StaticResource TextButton}" Margin="0,0,8,0" />
+</DataTemplate>
+</BindableLayout.ItemTemplate>
+</FlexLayout>
+<comp:FormField x:Name="NotesInput" LabelText="Informations complémentaires" Text="{Binding Notes}" MaxLength="300" IsOptional="True" HelperText="300 caractères max. Aucun numéro complet ici." ErrorText="{Binding Errors[Notes]}" />
+</VerticalStackLayout>
+<VerticalStackLayout Spacing="16" IsVisible="{Binding ShowReview}">
+<Label Text="Photo et vérification" Style="{StaticResource SectionTitle}" />
+<Button Text="{Binding PhotoLabel}" Command="{Binding PhotoCommand}" Style="{StaticResource SecondaryButton}" />
+<Image Source="{Binding PhotoPath}" IsVisible="{Binding HasPhoto}" HeightRequest="160" SemanticProperties.Description="Exemple de document fictif, photo privée" />
+<Button Text="Supprimer la photo" Command="{Binding RemovePhotoCommand}" IsVisible="{Binding HasPhoto}" Style="{StaticResource TextButton}" />
+<comp:InfoBanner Kind="Info" Message="Photo simulée, facultative et privée. JPG ou PNG, 10 Mo maximum." />
+<Border Style="{StaticResource Card}" IsVisible="{Binding IsLost}">
+<VerticalStackLayout Spacing="12">
+<Label Text="Récapitulatif" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding Summary}" />
+<Button Text="Modifier" Command="{Binding EditCommand}" Style="{StaticResource TextButton}" />
+</VerticalStackLayout>
+</Border>
+</VerticalStackLayout>
+<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+<Button Text="{Binding ActionText}" Command="{Binding ContinueCommand}" Style="{StaticResource PrimaryButton}" />
+<Button Text="Abandonner" Command="{Binding CloseCommand}" Style="{StaticResource TextButton}" />
+</VerticalStackLayout>
+</ScrollView>
+</Grid>
+</ContentPage>

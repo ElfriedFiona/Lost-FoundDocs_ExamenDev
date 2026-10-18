@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Shared.SplashPage"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource Primary}" Title="Lost&amp;Found Docs">
+    <!-- NB : l'écran de lancement n'est connu que par son texte dans le PDF ; fond et mise en page à comparer à la maquette. -->
+    <Grid RowDefinitions="*,Auto" Padding="24">
+        <VerticalStackLayout VerticalOptions="Center" Spacing="16" HorizontalOptions="Center">
+            <Border WidthRequest="88" HeightRequest="88" BackgroundColor="{StaticResource PrimaryTint}" StrokeThickness="0"
+                    HorizontalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="24" />
+                </Border.StrokeShape>
+                <Label Style="{StaticResource IconLabel}" FontSize="42" TextColor="{StaticResource White}"
+                       Text="{x:Static ui:Icons.FileSearch}" />
+            </Border>
+            <Label Text="Lost&amp;Found Docs" FontFamily="OpenSansSemibold" FontSize="30" TextColor="{StaticResource White}"
+                   HorizontalTextAlignment="Center" />
+            <Label Text="Retrouvez vos documents. Restituez-les simplement." FontSize="16" TextColor="#DCE9F9"
+                   HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <Label Grid.Row="1" Text="Service de restitution de documents · Douala" FontSize="13" TextColor="#DCE9F9"
+               HorizontalTextAlignment="Center" />
+    </Grid>
+</ContentPage>

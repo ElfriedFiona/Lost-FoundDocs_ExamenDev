@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Profile.PreferencesPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Préférences de notification">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Préférences de notification" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<comp:InfoBanner Kind="Info" Message="Préférences de démonstration enregistrées en mémoire. Aucun push réel." />
+<Grid ColumnDefinitions="*,Auto">
+<Label Text="Correspondances" VerticalOptions="Center" />
+<Switch Grid.Column="1" IsToggled="{Binding MatchNotifications}" SemanticProperties.Description="Correspondances" />
+</Grid>
+<Grid ColumnDefinitions="*,Auto">
+<Label Text="Messages" VerticalOptions="Center" />
+<Switch Grid.Column="1" IsToggled="{Binding MessageNotifications}" SemanticProperties.Description="Messages" />
+</Grid>
+<Grid ColumnDefinitions="*,Auto">
+<Label Text="Restitutions" VerticalOptions="Center" />
+<Switch Grid.Column="1" IsToggled="{Binding ReturnNotifications}" SemanticProperties.Description="Restitutions" />
+</Grid>
+<Grid ColumnDefinitions="*,Auto">
+<Label Text="Rappels" VerticalOptions="Center" />
+<Switch Grid.Column="1" IsToggled="{Binding ReminderNotifications}" SemanticProperties.Description="Rappels" />
+</Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

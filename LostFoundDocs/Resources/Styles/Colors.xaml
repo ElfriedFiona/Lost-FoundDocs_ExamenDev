@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Palette imposée -->
+    <Color x:Key="Primary">#1565C0</Color>
+    <Color x:Key="PrimarySoft">#EAF2FF</Color>
+    <Color x:Key="TextPrimary">#17202A</Color>
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="Background">#F8FAFC</Color>
+    <Color x:Key="TextSecondary">#6B7280</Color>
+    <Color x:Key="Border">#E5E7EB</Color>
+    <Color x:Key="Success">#16A34A</Color>
+    <Color x:Key="Warning">#F59E0B</Color>
+    <Color x:Key="Error">#DC2626</Color>
+
+    <!-- Teintes dérivées de la palette (à valider visuellement contre le PDF) -->
+    <Color x:Key="PrimaryDisabled">#A9C4E6</Color>
+    <Color x:Key="PrimaryTint">#4A85CC</Color>
+    <Color x:Key="InfoStroke">#C7DBF7</Color>
+    <Color x:Key="SuccessSoft">#E8F8EE</Color>
+    <Color x:Key="SuccessStroke">#BDEBD0</Color>
+    <Color x:Key="SuccessText">#15803D</Color>
+    <Color x:Key="WarningSoft">#FFF4E0</Color>
+    <Color x:Key="WarningStroke">#FBD9A0</Color>
+    <Color x:Key="WarningText">#B45309</Color>
+    <Color x:Key="ErrorSoft">#FEE2E2</Color>
+    <Color x:Key="ErrorStroke">#FBC4C4</Color>
+    <Color x:Key="ErrorText">#B91C1C</Color>
+    <Color x:Key="NeutralSoft">#F3F4F6</Color>
+    <Color x:Key="Placeholder">#9CA3AF</Color>
+
+    <!-- Brushes (nécessaires pour Border.Stroke) -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource Border}" />
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
+    <SolidColorBrush x:Key="InfoStrokeBrush" Color="{StaticResource InfoStroke}" />
+</ResourceDictionary>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Profile.AboutPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="À propos">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="À propos" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<Label Text="Lost&amp;Found Docs" Style="{StaticResource Title}"  />
+<Label Text="Version 1.0 · Douala" Style="{StaticResource Subtitle}"  />
+<comp:InfoBanner Kind="Info" Message="Frontend de démonstration. Aucun backend, aucune authentification réelle." />
+<Label Text="Résultat des prochaines recherches" Style="{StaticResource FieldLabel}"  />
+<Picker Title="Mode démonstration" ItemsSource="{Binding MatchModes}" SelectedIndex="{Binding MatchModeIndex}" />
+<Button Text="Repartir avec un compte vide" Command="{Binding EmptyCommand}" Style="{StaticResource SecondaryButton}"  />
+<Button Text="Charger les exemples fictifs" Command="{Binding PopulateCommand}" Style="{StaticResource SecondaryButton}"  />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

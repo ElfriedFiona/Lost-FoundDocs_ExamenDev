@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LostFoundDocs.Views.Components.EmptyState"
+             x:Name="Root">
+    <VerticalStackLayout Spacing="12" Padding="24,32" HorizontalOptions="Fill" BindingContext="{x:Reference Root}">
+        <Border WidthRequest="72" HeightRequest="72" BackgroundColor="{StaticResource PrimarySoft}"
+                StrokeThickness="0" HorizontalOptions="Center">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="36" />
+            </Border.StrokeShape>
+            <Label Style="{StaticResource IconLabel}" FontSize="30" TextColor="{StaticResource Primary}"
+                   Text="{Binding IconGlyph}" />
+        </Border>
+        <Label Text="{Binding Title}" Style="{StaticResource CardTitle}" HorizontalTextAlignment="Center" />
+        <Label Text="{Binding Message}" Style="{StaticResource Subtitle}" HorizontalTextAlignment="Center" FontSize="14" />
+        <Button Text="{Binding ActionText}" Command="{Binding ActionCommand}" Style="{StaticResource SoftButton}"
+                HorizontalOptions="Center" IsVisible="{Binding HasAction}" />
+    </VerticalStackLayout>
+</ContentView>

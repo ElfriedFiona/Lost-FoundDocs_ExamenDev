@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Restitution.RestitutionPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="{Binding Title}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="{Binding Title}" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+<comp:InfoBanner Kind="Neutral" Message="Simulation · données fictives, conservées uniquement pendant la session." />
+<Border Style="{StaticResource Card}">
+<VerticalStackLayout Spacing="8">
+<Label Text="{Binding Report.Title}" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding Report.Reference}" Style="{StaticResource Caption}" />
+<comp:StatusBadge Status="{Binding Report.Status}" />
+<Label Text="{Binding Report.DateLabelLong}" />
+<Label Text="{Binding Report.LocationLabel}" />
+</VerticalStackLayout>
+</Border>
+<VerticalStackLayout Spacing="12" IsVisible="{Binding HasProposal}">
+<Label Text="{Binding Proposal.Summary}" Style="{StaticResource SectionTitle}" />
+<comp:InfoBanner Kind="Warning" Message="Proposition expirée. Choisissez un autre créneau." IsVisible="{Binding Expired}" />
+<Button Text="Accepter le rendez-vous" Command="{Binding AcceptCommand}" Style="{StaticResource PrimaryButton}" IsVisible="{Binding CanAccept}" />
+<Button Text="Proposer un autre créneau" Command="{Binding ChangeCommand}" Style="{StaticResource SecondaryButton}"  />
+<Button Text="{Binding ConfirmLabel}" Command="{Binding ConfirmCommand}" Style="{StaticResource PrimaryButton}" IsVisible="{Binding CanConfirm}" />
+</VerticalStackLayout>
+<VerticalStackLayout Spacing="12" IsVisible="{Binding ShowForm}">
+<Label Text="Lieu public recommandé" Style="{StaticResource FieldLabel}" />
+<Picker Title="Choisir un lieu" ItemsSource="{Binding Places}" SelectedItem="{Binding Place}" />
+<Label Text="Jour" Style="{StaticResource FieldLabel}" />
+<Picker Title="Choisir un jour" ItemsSource="{Binding Days}" SelectedItem="{Binding Day}" ItemDisplayBinding="{Binding ., StringFormat='{0:ddd dd MMM}'}" />
+<Label Text="Créneau disponible" Style="{StaticResource FieldLabel}" />
+<Picker Title="Choisir une heure" ItemsSource="{Binding Slots}" SelectedItem="{Binding Slot}" />
+<Label Text="{Binding Error}" TextColor="{StaticResource ErrorText}" />
+<Button Text="Proposer ce rendez-vous" Command="{Binding ProposeCommand}" Style="{StaticResource PrimaryButton}"  />
+</VerticalStackLayout>
+<comp:InfoBanner Kind="Info" Message="Privilégiez un lieu public et fréquenté. Vérifiez le document avant de confirmer sa restitution." />
+<Button Text="Ouvrir la conversation" Command="{Binding ConversationCommand}" Style="{StaticResource SecondaryButton}"  />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

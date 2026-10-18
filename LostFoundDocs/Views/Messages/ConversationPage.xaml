@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Messages.ConversationPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Conversation">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Conversation" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+<comp:InfoBanner Kind="Neutral" Message="Simulation · données fictives, conservées uniquement pendant la session." />
+<Label Text="{Binding Report.Title}" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding Conversation.Contact}" />
+<Label Text="{Binding Conversation.Role}" Style="{StaticResource Caption}" />
+<Button Text="Restitution" Command="{Binding RestitutionCommand}" Style="{StaticResource SecondaryButton}" IsVisible="{Binding CanWrite}" />
+<VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Conversation.Messages}">
+<BindableLayout.ItemTemplate>
+<DataTemplate>
+<Border Style="{StaticResource Card}">
+<VerticalStackLayout Spacing="6">
+<Label Text="{Binding Caption}" Style="{StaticResource Caption}" />
+<Label Text="{Binding Text}" />
+</VerticalStackLayout>
+</Border>
+</DataTemplate>
+</BindableLayout.ItemTemplate>
+</VerticalStackLayout>
+<comp:InfoBanner Kind="Neutral" Message="Conversation clôturée" IsVisible="{Binding IsClosed}" />
+<VerticalStackLayout Spacing="8" IsVisible="{Binding CanWrite}">
+<Label Text="Votre message" Style="{StaticResource FieldLabel}" />
+<Editor Text="{Binding Message}" Placeholder="Écrire un message…" MaxLength="1000" AutoSize="TextChanges" MinimumHeightRequest="80" SemanticProperties.Description="Votre message" />
+<Button Text="Envoyer" Command="{Binding SendCommand}" Style="{StaticResource PrimaryButton}"  />
+</VerticalStackLayout>
+<Button Text="Voir la preuve" Command="{Binding ReceiptCommand}" Style="{StaticResource PrimaryButton}" IsVisible="{Binding IsReturned}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

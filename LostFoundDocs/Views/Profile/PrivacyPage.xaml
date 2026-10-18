@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Profile.PrivacyPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Confidentialité">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Confidentialité" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<Label Text="Vos documents restent privés" Style="{StaticResource SectionTitle}"  />
+<Label Text="Seuls les quatre derniers caractères du numéro sont affichés. La date de naissance complète et la photo restent privées." Style="{StaticResource Subtitle}"  />
+<Label Text="Les échanges sont simulés localement. Aucun document, SMS ou message n’est envoyé à un serveur." Style="{StaticResource Subtitle}"  />
+<Label Text="Fermer l’application supprime les données en mémoire. N’utilisez que des informations fictives pour la démonstration." Style="{StaticResource Subtitle}"  />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Profile.HelpPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Aide">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Aide" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<Button Text="Comment retrouver mon document ?" Command="{Binding FaqCommand}" Style="{StaticResource SecondaryButton}"  />
+<Label IsVisible="{Binding ShowFaq}" Text="Déclarez la perte, lancez la recherche et ouvrez une correspondance. La messagerie permet ensuite d’organiser une restitution dans un lieu public. En démonstration, le résultat dépend du type et de la ville, ou du mode choisi dans À propos." />
+<Button Text="Contacter l’assistance (simulation)" Command="{Binding SupportCommand}" Style="{StaticResource SecondaryButton}"  />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

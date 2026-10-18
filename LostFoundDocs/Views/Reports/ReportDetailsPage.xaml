@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Reports.ReportDetailsPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Détails du signalement">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<comp:BackHeader Title="Détails du signalement" />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+<comp:InfoBanner Kind="Neutral" Message="Simulation · données fictives, conservées uniquement pendant la session." />
+<Border Style="{StaticResource Card}">
+<VerticalStackLayout Spacing="8">
+<Label Text="{Binding Report.Title}" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding Report.Reference}" Style="{StaticResource Caption}" />
+<comp:StatusBadge Status="{Binding Report.Status}" />
+<Label Text="{Binding Report.DateLabelLong}" />
+<Label Text="{Binding Report.LocationLabel}" />
+</VerticalStackLayout>
+</Border>
+<Label Text="{Binding Report.HolderName}" />
+<Label Text="{Binding Report.MaskedNumber, StringFormat='Numéro : {0}'}" />
+<Label Text="{Binding Report.Issuer}" />
+<Label Text="{Binding Report.Notes}" />
+<Image Source="{Binding Report.PhotoPath}" HeightRequest="160" IsVisible="{Binding HasPhoto}" SemanticProperties.Description="Photo de démonstration privée" />
+<Label Text="Historique" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding Timeline}" />
+<Button Text="Lancer la recherche" Command="{Binding SearchCommand}" Style="{StaticResource PrimaryButton}" IsVisible="{Binding CanSearch}" />
+<Button Text="Voir la correspondance" Command="{Binding SearchCommand}" Style="{StaticResource PrimaryButton}" IsVisible="{Binding HasMatch}" />
+<Button Text="Ouvrir la conversation" Command="{Binding ConversationCommand}" Style="{StaticResource SecondaryButton}" IsVisible="{Binding CanContact}" />
+<Button Text="Organiser la restitution" Command="{Binding RestitutionCommand}" Style="{StaticResource SecondaryButton}" IsVisible="{Binding CanContact}" />
+<Button Text="Voir la preuve" Command="{Binding ReceiptCommand}" Style="{StaticResource PrimaryButton}" IsVisible="{Binding IsReturned}" />
+<Button Text="Annuler le signalement" Command="{Binding CancelCommand}" Style="{StaticResource TextButton}" IsVisible="{Binding CanCancel}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

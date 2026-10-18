@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Shared.ReportsPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Mes signalements">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<Label Text="Mes signalements" Style="{StaticResource Title}"  />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<Button Text="Nouveau signalement" Command="{Binding NewCommand}" Style="{StaticResource PrimaryButton}"  />
+<Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+<Button Text="{Binding LostLabel}" Command="{Binding LostCommand}" Style="{StaticResource SecondaryButton}" />
+<Button Grid.Column="1" Text="{Binding FoundLabel}" Command="{Binding FoundCommand}" Style="{StaticResource SecondaryButton}" />
+</Grid>
+<Label Text="{Binding FilterLabel}" Style="{StaticResource SectionTitle}" />
+<comp:EmptyState Title="Aucun signalement" Message="Déclarez un document pour commencer." ActionText="Déclarer un document" ActionCommand="{Binding NewCommand}" IsVisible="{Binding IsEmpty}" />
+<VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Items}">
+<BindableLayout.ItemTemplate>
+<DataTemplate>
+<Border Style="{StaticResource Card}">
+<VerticalStackLayout Spacing="8">
+<Label Text="{Binding Title}" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding DateLabelLong}" />
+<Label Text="{Binding LocationLabel}" />
+<comp:StatusBadge Status="{Binding Status}" />
+<Button Text="Voir le signalement" Style="{StaticResource TextButton}" Command="{Binding BindingContext.OpenCommand, Source={x:Reference Root}}" CommandParameter="{Binding .}" />
+</VerticalStackLayout>
+</Border>
+</DataTemplate>
+</BindableLayout.ItemTemplate>
+</VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        <comp:BottomNavBar Grid.Row="2" SelectedTab="Reports" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Home.HomePage"
+             Shell.NavBarIsVisible="False" Title="Accueil">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16,20,16,24" Spacing="16">
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding Greeting}" Style="{StaticResource Title}" />
+                        <Label Text="Que souhaitez-vous faire ?" Style="{StaticResource Subtitle}" />
+                    </VerticalStackLayout>
+                    <Grid Grid.Column="1" VerticalOptions="Start" WidthRequest="48" HeightRequest="48"
+                          SemanticProperties.Description="Notifications" SemanticProperties.Hint="Ouvrir les notifications">
+                        <Border Style="{StaticResource Card}" Padding="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource TextPrimary}"
+                                   Text="{x:Static ui:Icons.Bell}" />
+                        </Border>
+                        <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{StaticResource Error}"
+                                 HorizontalOptions="End" VerticalOptions="Start" Margin="0,8,8,0"
+                                 IsVisible="{Binding HasUnreadNotifications}" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NotificationsCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Grid>
+
+                <!-- Carte principale : j'ai perdu -->
+                <Border BackgroundColor="{StaticResource Primary}" StrokeThickness="0" Padding="16"
+                        SemanticProperties.Description="J’ai perdu un document" SemanticProperties.Hint="Signaler une perte">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{StaticResource PrimaryTint}"
+                                StrokeThickness="0" VerticalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource White}"
+                                   Text="{x:Static ui:Icons.FileSearch}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="J’ai perdu un document" FontFamily="OpenSansSemibold" FontSize="18"
+                                   TextColor="{StaticResource White}" />
+                            <Label Text="Signaler une perte et rechercher automatiquement une correspondance."
+                                   FontSize="14" TextColor="#DCE9F9" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Style="{StaticResource IconLabel}" TextColor="{StaticResource White}"
+                               Text="{x:Static ui:Icons.ArrowRight}" VerticalOptions="Start" />
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeclareLostCommand}" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- Carte secondaire : j'ai trouvé -->
+                <Border BackgroundColor="{StaticResource PrimarySoft}" Stroke="{StaticResource InfoStrokeBrush}"
+                        StrokeThickness="1" Padding="16"
+                        SemanticProperties.Description="J’ai trouvé un document" SemanticProperties.Hint="Signaler un document trouvé">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{StaticResource White}"
+                                StrokeThickness="0" VerticalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource Primary}"
+                                   Text="{x:Static ui:Icons.FileCheck}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="J’ai trouvé un document" FontFamily="OpenSansSemibold" FontSize="18" />
+                            <Label Text="Signaler un document trouvé pour aider son propriétaire." Style="{StaticResource Subtitle}" FontSize="14" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Style="{StaticResource IconLabel}" TextColor="{StaticResource Primary}"
+                               Text="{x:Static ui:Icons.ArrowRight}" VerticalOptions="Start" />
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeclareFoundCommand}" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- Encart de recherche (texte de la maquette ; comportement simulé) -->
+                <Border Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{StaticResource PrimarySoft}"
+                                StrokeThickness="0" VerticalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource Primary}"
+                                   Text="{x:Static ui:Icons.ScanSearch}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Vous signalez une fois. Nous cherchons pour vous." Style="{StaticResource CardTitle}" />
+                            <Label Text="Chaque nouveau document déclaré est comparé automatiquement à vos signalements. Vous êtes notifié dès qu’une correspondance est détectée."
+                                   Style="{StaticResource Caption}" FontSize="14" />
+                            <HorizontalStackLayout Spacing="8" Margin="0,6,0,0">
+                                <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{StaticResource Success}"
+                                         VerticalOptions="Center" />
+                                <Label Text="{Binding SearchSummary}" FontFamily="OpenSansSemibold" FontSize="13" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <comp:InfoBanner Kind="Neutral" IconGlyph="{x:Static ui:Icons.Info}"
+                                 Message="Mode démonstration : données fictives, aucune recherche réelle n’est effectuée." />
+
+                <!-- Mes signalements -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                    <Label Text="Mes signalements" Style="{StaticResource SectionTitle}" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="Tout voir" Style="{StaticResource TextButton}" Command="{Binding SeeAllCommand}" />
+                </Grid>
+
+                <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding ActiveReports}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <comp:ReportCard ShowLocation="False" Tapped="OnReportTapped" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasNoReports}">
+                    <comp:EmptyState IconGlyph="{x:Static ui:Icons.FileText}" Title="Aucun signalement pour l’instant"
+                                     Message="Déclarez un document perdu ou trouvé pour commencer."
+                                     ActionText="Déclarer un document perdu" ActionCommand="{Binding DeclareLostCommand}" />
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <comp:BottomNavBar Grid.Row="1" SelectedTab="Home" MessagesBadge="{Binding UnreadMessages}" />
+    </Grid>
+</ContentPage>

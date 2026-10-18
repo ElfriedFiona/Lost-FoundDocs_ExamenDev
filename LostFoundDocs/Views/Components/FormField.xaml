@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Components.FormField"
+             x:Name="Root">
+    <VerticalStackLayout Spacing="6" BindingContext="{x:Reference Root}">
+
+        <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasLabel}">
+            <Label Text="{Binding LabelText}" Style="{StaticResource FieldLabel}" VerticalOptions="Center" />
+            <Label Text="(facultatif)" Style="{StaticResource Caption}" VerticalOptions="Center" IsVisible="{Binding IsOptional}" />
+            <Border BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0" Padding="8,2"
+                    VerticalOptions="Center" IsVisible="{Binding HasBadge}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Label Text="{Binding BadgeText}" TextColor="{StaticResource Primary}" FontSize="12" FontFamily="OpenSansSemibold" />
+            </Border>
+        </HorizontalStackLayout>
+
+        <Border x:Name="FieldBorder" Stroke="{StaticResource BorderBrush}" StrokeThickness="1"
+                BackgroundColor="{StaticResource White}" Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto" HeightRequest="48">
+                <Label Grid.Column="0" Text="{Binding PrefixText}" IsVisible="{Binding HasPrefix}"
+                       BackgroundColor="{StaticResource Background}" Padding="14,0"
+                       VerticalOptions="Fill" VerticalTextAlignment="Center" />
+                <BoxView Grid.Column="1" WidthRequest="1" Color="{StaticResource Border}" IsVisible="{Binding HasPrefix}" />
+                <Entry x:Name="Input" Grid.Column="2" Margin="12,0,0,0" VerticalOptions="Center"
+                       Text="{Binding Text, Mode=TwoWay}"
+                       Placeholder="{Binding Placeholder}"
+                       Keyboard="{Binding Keyboard}"
+                       MaxLength="{Binding MaxLength}"
+                       IsPassword="{Binding IsTextHidden}"
+                       SemanticProperties.Description="{Binding LabelText}" />
+                <Label Grid.Column="3" Style="{StaticResource IconLabel}" Padding="14,0"
+                       VerticalOptions="Fill" Text="{Binding EyeGlyph}" IsVisible="{Binding IsPassword}"
+                       SemanticProperties.Description="Afficher ou masquer le mot de passe">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEyeTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Border>
+
+        <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasError}">
+            <Label Style="{StaticResource IconLabel}" FontSize="16" TextColor="{StaticResource Error}"
+                   Text="{x:Static ui:Icons.CircleAlert}" VerticalOptions="Start" />
+            <Label Text="{Binding ErrorText}" TextColor="{StaticResource ErrorText}" FontSize="13"
+                   SemanticProperties.Description="{Binding ErrorText}" />
+        </HorizontalStackLayout>
+        <Label Text="{Binding HelperText}" Style="{StaticResource Caption}" IsVisible="{Binding ShowHelper}" />
+    </VerticalStackLayout>
+</ContentView>

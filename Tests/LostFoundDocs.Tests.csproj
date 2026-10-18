@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../LostFoundDocs/Models/*.cs" />
+    <Compile Include="../LostFoundDocs/Services/Clock.cs" />
+    <Compile Include="../LostFoundDocs/Services/Abstractions/*.cs" />
+    <Compile Include="../LostFoundDocs/Services/Validation/*.cs" />
+    <Compile Include="../LostFoundDocs/Services/Mock/*.cs" />
+    <Compile Include="../LostFoundDocs/Services/Navigation/Routes.cs" />
+  </ItemGroup>
+</Project>

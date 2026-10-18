@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" x:Class="LostFoundDocs.Views.Shared.MessagesPage" x:Name="Root" Shell.NavBarIsVisible="False" Title="Messages">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Padding="16,12" Spacing="8">
+<Label Text="Messages" Style="{StaticResource Title}"  />
+</VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,28" Spacing="16">
+<comp:InfoBanner Kind="Info" Message="Échanges simulés, liés à vos correspondances." />
+<Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+<Button Text="Toutes" Command="{Binding AllCommand}" Style="{StaticResource SecondaryButton}" />
+<Button Grid.Column="1" Text="Non lues" Command="{Binding UnreadCommand}" Style="{StaticResource SecondaryButton}" />
+</Grid>
+<Label Text="{Binding FilterLabel}" Style="{StaticResource SectionTitle}" />
+<comp:EmptyState Title="Aucune conversation" Message="Les conversations s’ouvrent après une correspondance." IsVisible="{Binding IsEmpty}" ActionText="Déclarer un document" ActionCommand="{Binding DeclareCommand}" />
+<VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Items}">
+<BindableLayout.ItemTemplate>
+<DataTemplate>
+<Border Style="{StaticResource Card}">
+<VerticalStackLayout Spacing="6">
+<Label Text="{Binding Report.Title}" Style="{StaticResource SectionTitle}" />
+<Label Text="{Binding Contact}" />
+<Label Text="{Binding Role}" Style="{StaticResource Caption}" />
+<Label Text="{Binding Preview}" MaxLines="1" LineBreakMode="TailTruncation" />
+<Label Text="{Binding UnreadLabel}" TextColor="{StaticResource Primary}" />
+<Button Text="Ouvrir la conversation" Style="{StaticResource TextButton}" Command="{Binding BindingContext.OpenCommand, Source={x:Reference Root}}" CommandParameter="{Binding .}" />
+</VerticalStackLayout>
+</Border>
+</DataTemplate>
+</BindableLayout.ItemTemplate>
+</VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        <comp:BottomNavBar Grid.Row="2" SelectedTab="Messages" />
+    </Grid>
+</ContentPage>
