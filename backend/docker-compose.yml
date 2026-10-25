@@ -1,0 +1,18 @@
+# Démarrage : copier .env.example en .env, renseigner SERVER_SECRET, puis `docker compose up -d --build`
+services:
+  api:
+    build: .
+    ports:
+      - "5080:5080"
+    environment:
+      Security__ServerSecret: ${SERVER_SECRET:?définissez SERVER_SECRET (32 caractères minimum)}
+      Public__BaseUrl: ${PUBLIC_BASE_URL:-http://localhost:5080}
+      Sms__Provider: ${SMS_PROVIDER:-Log}
+      Sms__Url: ${SMS_URL:-}
+      Sms__AuthHeaderValue: ${SMS_AUTH_VALUE:-}
+      Security__TrustForwardedHeaders: ${TRUST_FORWARDED_HEADERS:-false}
+    volumes:
+      - lostfound-data:/app/data
+    restart: unless-stopped
+volumes:
+  lostfound-data:
