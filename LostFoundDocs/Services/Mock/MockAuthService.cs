@@ -74,6 +74,25 @@ public sealed class MockAuthService : IAuthService
         return Task.CompletedTask;
     }
 
+    public async Task<AuthResult> UpdateProfileAsync(string fullName, string? email)
+    {
+        await Task.Delay(DemoSettings.SimulatedLatencyMs);
+        var user = CurrentUser ?? throw new InvalidOperationException("Aucune session ouverte.");
+        user.FullName = fullName.Trim();
+        user.Email = string.IsNullOrWhiteSpace(email) ? null : email.Trim();
+        SessionChanged?.Invoke(this, EventArgs.Empty);
+        return AuthResult.Ok;
+    }
+
+    public async Task<AuthResult> ChangePasswordAsync(string currentPassword, string newPassword)
+    {
+        await Task.Delay(DemoSettings.SimulatedLatencyMs);
+        var user = CurrentUser ?? throw new InvalidOperationException("Aucune session ouverte.");
+        if (user.Password != currentPassword) return AuthResult.Fail(AuthFailure.InvalidCredentials);
+        user.Password = newPassword;
+        return AuthResult.Ok;
+    }
+
     public async Task<AuthResult> RequestPasswordResetAsync(string phone)
     {
         await Task.Delay(DemoSettings.SimulatedLatencyMs);

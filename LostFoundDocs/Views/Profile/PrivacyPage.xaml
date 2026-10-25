@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Profile.PrivacyPage"
+             Shell.NavBarIsVisible="False" Title="Confidentialité">
+    <Grid RowDefinitions="Auto,*">
+        <comp:BackHeader Title="Confidentialité" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="12">
+                <Label Text="Vos informations personnelles sont protégées et ne sont utilisées que pour le fonctionnement du service." Style="{StaticResource Subtitle}" FontSize="14" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Numéros de documents" Style="{StaticResource CardTitle}" />
+                        <Label Text="Les numéros sont masqués partout dans l’application : seuls les 4 derniers caractères peuvent s’afficher." Style="{StaticResource Caption}" FontSize="14" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Date de naissance" Style="{StaticResource CardTitle}" />
+                        <Label Text="Elle est facultative, utilisée uniquement pour la correspondance et jamais affichée en entier." Style="{StaticResource Caption}" FontSize="14" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Photos" Style="{StaticResource CardTitle}" />
+                        <Label Text="La photo d’un document sert à faciliter l’identification. Elle n’est jamais affichée publiquement." Style="{StaticResource Caption}" FontSize="14" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Contact" Style="{StaticResource CardTitle}" />
+                        <Label Text="Les échanges passent par la messagerie sécurisée liée à une correspondance. Votre numéro de téléphone n’est pas communiqué à l’autre personne." Style="{StaticResource Caption}" FontSize="14" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Restitution" Style="{StaticResource CardTitle}" />
+                        <Label Text="Rencontrez-vous dans un lieu public, de jour. Aucune somme d’argent ne doit être demandée." Style="{StaticResource Caption}" FontSize="14" />
+                    </VerticalStackLayout>
+                </Border>
+                <comp:InfoBanner Kind="Warning" Title="Mode démonstration"
+                                 Message="Cette version n’envoie aucune donnée à un serveur : tout reste en mémoire sur l’appareil et disparaît à la fermeture." />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

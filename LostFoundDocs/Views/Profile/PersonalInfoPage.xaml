@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Profile.PersonalInfoPage"
+             Shell.NavBarIsVisible="False" Title="Informations personnelles">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <comp:BackHeader Title="Informations personnelles" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="16">
+                <comp:FormField LabelText="Nom complet" Text="{Binding FullName, Mode=TwoWay}" ErrorText="{Binding NameError}" />
+                <comp:FormField LabelText="Numéro de téléphone" Text="{Binding DisplayPhone, Mode=OneWay}"
+                                HelperText="{Binding PhoneStatus}" IsEnabled="False" />
+                <comp:FormField LabelText="Adresse e-mail" IsOptional="True" Placeholder="nom@exemple.cm" Keyboard="Email"
+                                Text="{Binding Email, Mode=TwoWay}" ErrorText="{Binding EmailError}" />
+                <comp:InfoBanner Kind="Success" Message="{Binding Success}" IsVisible="{Binding HasSuccess}" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Row="2" Text="Enregistrer" Style="{StaticResource PrimaryButton}" Margin="16,8,16,16" Command="{Binding SaveCommand}" />
+    </Grid>
+</ContentPage>

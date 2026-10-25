@@ -17,4 +17,12 @@ public partial class ProfilePage : ContentPage
         base.OnAppearing();
         _viewModel.Refresh();
     }
+
+    private void OnMenuTapped(object? sender, TappedEventArgs e)
+    {
+        if (sender is BindableObject { BindingContext: ProfileMenuItem item })
+        {
+            _viewModel.OpenCommand.Execute(item.Route);
+        }
+    }
 }

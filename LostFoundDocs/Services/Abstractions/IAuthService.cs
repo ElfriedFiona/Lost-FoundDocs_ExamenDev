@@ -22,6 +22,9 @@ public interface IAuthService
     Task<AuthResult> RegisterAsync(RegistrationRequest request);
     Task SignOutAsync();
 
+    Task<AuthResult> UpdateProfileAsync(string fullName, string? email);
+    Task<AuthResult> ChangePasswordAsync(string currentPassword, string newPassword);
+
     Task<AuthResult> RequestPasswordResetAsync(string phone);
     Task<AuthResult> VerifyResetCodeAsync(string phone, string code);
     Task<AuthResult> ResetPasswordAsync(string phone, string newPassword);

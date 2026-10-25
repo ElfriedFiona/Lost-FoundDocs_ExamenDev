@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Profile.SecurityPage"
+             Shell.NavBarIsVisible="False" Title="Sécurité">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <comp:BackHeader Title="Sécurité" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="16">
+                <Label Text="Changer le mot de passe" Style="{StaticResource SectionTitle}" />
+                <comp:FormField LabelText="Mot de passe actuel" IsPassword="True" Text="{Binding CurrentPassword, Mode=TwoWay}" ErrorText="{Binding CurrentError}" />
+                <comp:FormField LabelText="Nouveau mot de passe" IsPassword="True" HelperText="8 caractères minimum."
+                                Text="{Binding NewPassword, Mode=TwoWay}" ErrorText="{Binding NewError}" />
+                <comp:FormField LabelText="Confirmer le nouveau mot de passe" IsPassword="True"
+                                Text="{Binding ConfirmPassword, Mode=TwoWay}" ErrorText="{Binding ConfirmError}" />
+                <comp:InfoBanner Kind="Success" Message="{Binding Success}" IsVisible="{Binding HasSuccess}" />
+                <comp:InfoBanner Kind="Neutral" Message="Démonstration : le mot de passe reste en mémoire sur l’appareil. Le backend assurera le stockage sécurisé et la protection des sessions." />
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Row="2" Text="Modifier le mot de passe" Style="{StaticResource PrimaryButton}" Margin="16,8,16,16" Command="{Binding SaveCommand}" />
+    </Grid>
+</ContentPage>

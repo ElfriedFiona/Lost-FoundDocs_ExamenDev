@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Profile.AboutPage"
+             Shell.NavBarIsVisible="False" Title="À propos">
+    <Grid RowDefinitions="Auto,*">
+        <comp:BackHeader Title="À propos de Lost&amp;Found Docs" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="16">
+                <comp:LogoMark />
+                <Label Text="Service de restitution de documents · Douala" Style="{StaticResource Subtitle}" FontSize="14" />
+                <Label Text="{Binding Version}" Style="{StaticResource Caption}" />
+                <comp:InfoBanner Kind="Warning" Title="Frontend de démonstration"
+                                 Message="Les données, correspondances, messages, notifications et reçus sont fictifs et locaux. Le backend sera développé dans une étape distincte." />
+
+                <Label Text="Mode démonstration" Style="{StaticResource SectionTitle}" />
+                <Label Text="Règle de la recherche de correspondance" Style="{StaticResource FieldLabel}" />
+                <comp:OptionList Items="{Binding ModeOptions}" SelectedItem="{Binding SelectedMode, Mode=TwoWay}" />
+                <Border Style="{StaticResource Card}" Padding="16,10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <Label Text="Réponse automatique fictive" FontFamily="OpenSansSemibold" FontSize="15" />
+                            <Label Text="Les conversations reçoivent une réponse simulée." Style="{StaticResource Caption}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1" IsToggled="{Binding AutoReply, Mode=TwoWay}" OnColor="{StaticResource Primary}"
+                                SemanticProperties.Description="Réponse automatique fictive" />
+                    </Grid>
+                </Border>
+                <Button Text="Réinitialiser les données de démonstration" Style="{StaticResource SecondaryButton}" Command="{Binding ResetCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

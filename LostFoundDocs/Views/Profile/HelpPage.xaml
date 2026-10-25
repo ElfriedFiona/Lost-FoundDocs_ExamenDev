@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Profile.HelpPage"
+             Shell.NavBarIsVisible="False" Title="Aide">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <comp:BackHeader Title="Aide" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="10">
+                <Label Text="Questions fréquentes" Style="{StaticResource SectionTitle}" />
+                <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Faq}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}" Padding="16,12">
+                                <VerticalStackLayout Spacing="8">
+                                    <Grid ColumnDefinitions="*,Auto" SemanticProperties.Hint="Afficher ou masquer la réponse">
+                                        <Label Text="{Binding Question}" FontFamily="OpenSansSemibold" FontSize="15" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Style="{StaticResource IconLabel}" Text="{Binding Glyph}" TextColor="{StaticResource TextPrimary}" />
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnFaqTapped" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                    <Label Text="{Binding Answer}" Style="{StaticResource Caption}" FontSize="14" IsVisible="{Binding IsOpen}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" BackgroundColor="{StaticResource White}">
+            <Button Text="Contacter le support (simulation)" Style="{StaticResource SecondaryButton}" Command="{Binding ContactCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

@@ -3,6 +3,7 @@ using LostFoundDocs.Views.Auth;
 using LostFoundDocs.Views.Declaration;
 using LostFoundDocs.Views.Matching;
 using LostFoundDocs.Views.Messages;
+using LostFoundDocs.Views.Profile;
 using LostFoundDocs.Views.Reports;
 using LostFoundDocs.Views.Restitution;
 
@@ -30,8 +31,14 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(Routes.Restitution, typeof(RestitutionPage));
         Routing.RegisterRoute(Routes.Restituted, typeof(RestitutedPage));
         Routing.RegisterRoute(Routes.Receipt, typeof(ReceiptPage));
+        Routing.RegisterRoute(Routes.PersonalInfo, typeof(PersonalInfoPage));
+        Routing.RegisterRoute(Routes.Security, typeof(SecurityPage));
+        Routing.RegisterRoute(Routes.NotificationPrefs, typeof(NotificationPrefsPage));
+        Routing.RegisterRoute(Routes.Privacy, typeof(PrivacyPage));
+        Routing.RegisterRoute(Routes.Help, typeof(HelpPage));
+        Routing.RegisterRoute(Routes.About, typeof(AboutPage));
 
         // Les routes livrées cessent d'afficher « Bientôt disponible ».
-        Routes.MarkAvailable(Routes.DeclareLost, Routes.DeclareFound, Routes.DeclarationConfirmation, Routes.Search, Routes.MatchResult, Routes.NoMatch, Routes.MatchDetails, Routes.ReportDetails, Routes.Conversation, Routes.Notifications, Routes.Restitution, Routes.Restituted, Routes.Receipt);
+        Routes.MarkAvailable(Routes.DeclareLost, Routes.DeclareFound, Routes.DeclarationConfirmation, Routes.Search, Routes.MatchResult, Routes.NoMatch, Routes.MatchDetails, Routes.ReportDetails, Routes.Conversation, Routes.Notifications, Routes.Restitution, Routes.Restituted, Routes.Receipt, Routes.PersonalInfo, Routes.Security, Routes.NotificationPrefs, Routes.Privacy, Routes.Help, Routes.About);
     }
 }
