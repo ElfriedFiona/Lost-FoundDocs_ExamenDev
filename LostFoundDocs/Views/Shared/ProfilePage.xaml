@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Shared.ProfilePage"
+             Shell.NavBarIsVisible="False" Title="Profil">
+    <!-- Version minimale de la phase A (identité + déconnexion). Menus complets en phase B. -->
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16,20" Spacing="16">
+                <Label Text="Mon profil" Style="{StaticResource Title}" />
+                <Border Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                        <Border WidthRequest="64" HeightRequest="64" BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="32" />
+                            </Border.StrokeShape>
+                            <Label Text="{Binding Initials}" FontFamily="OpenSansSemibold" FontSize="22"
+                                   TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding FullName}" Style="{StaticResource CardTitle}" />
+                            <Label Text="{Binding DisplayPhone}" Style="{StaticResource Caption}" FontSize="14" />
+                            <Label Text="Numéro vérifié" TextColor="{StaticResource SuccessText}" FontSize="13"
+                                   IsVisible="{Binding IsVerified}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+                <comp:InfoBanner Kind="Neutral" Message="Compte de démonstration : les informations affichées sont fictives."
+                                 IsVisible="{Binding IsDemoAccount}" />
+                <comp:InfoBanner Kind="Info" Message="Les pages Informations personnelles, Sécurité, Notifications, Confidentialité, Aide et À propos sont livrées en phase B." />
+                <Button Text="Se déconnecter" Style="{StaticResource SecondaryButton}" TextColor="{StaticResource ErrorText}"
+                        Command="{Binding SignOutCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <comp:BottomNavBar Grid.Row="1" SelectedTab="Profile" />
+    </Grid>
+</ContentPage>

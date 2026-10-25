@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Shared.MessagesPage"
+             Shell.NavBarIsVisible="False" Title="Messages">
+    <!-- Écran provisoire de la phase A : remplacé en phase B. -->
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Label Text="Messages" Style="{StaticResource Title}" Margin="16,20,16,8" />
+        <comp:EmptyState Grid.Row="1" VerticalOptions="Center" IconGlyph="{x:Static ui:Icons.MessageSquare}"
+                         Title="Bientôt disponible" Message="La messagerie liée aux correspondances est livrée en phase B." />
+        <comp:BottomNavBar Grid.Row="2" SelectedTab="Messages" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Auth.LoginPage"
+             Shell.NavBarIsVisible="False" Title="Connexion">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="20,24" Spacing="18">
+                <comp:LogoMark />
+                <VerticalStackLayout Spacing="8" Margin="0,12,0,0">
+                    <Label Text="Bienvenue sur Lost&amp;Found Docs" Style="{StaticResource Title}" />
+                    <Label Text="Une plateforme simple pour retrouver et restituer vos documents." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+
+                <comp:FormField LabelText="Numéro de téléphone" PrefixText="+237" Placeholder="6 XX XX XX XX"
+                                Keyboard="Telephone" MaxLength="17"
+                                Text="{Binding Phone, Mode=TwoWay}" ErrorText="{Binding PhoneError}" />
+                <comp:FormField LabelText="Mot de passe" IsPassword="True"
+                                Text="{Binding Password, Mode=TwoWay}" ErrorText="{Binding PasswordError}" />
+                <Button Text="Mot de passe oublié ?" Style="{StaticResource TextButton}" HorizontalOptions="End"
+                        Command="{Binding ForgotPasswordCommand}" />
+
+                <comp:InfoBanner Kind="Error" Message="{Binding FormError}" IsVisible="{Binding HasFormError}" />
+
+                <Button Text="{Binding SignInText}" Style="{StaticResource PrimaryButton}"
+                        Command="{Binding SignInCommand}" IsEnabled="{Binding IsNotBusy}" />
+
+                <!-- SIMULATION : compte de démonstration identifiable -->
+                <Border Style="{StaticResource Card}" Padding="14">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Compte de démonstration" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{Binding DemoHint}" Style="{StaticResource Caption}" />
+                        <Button Text="Utiliser le compte de démonstration" Style="{StaticResource SoftButton}"
+                                Command="{Binding UseDemoCommand}" />
+                        <Label Text="Mode démonstration : données fictives, aucun service réel n’est connecté."
+                               Style="{StaticResource Caption}" FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Padding="20,8,20,20" Spacing="10" BackgroundColor="{StaticResource Background}">
+            <Label Text="Pas encore de compte ?" Style="{StaticResource Subtitle}" FontSize="14" HorizontalTextAlignment="Center" />
+            <Button Text="Créer un compte" Style="{StaticResource SecondaryButton}" Command="{Binding RegisterCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

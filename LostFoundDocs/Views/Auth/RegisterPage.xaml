@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Auth.RegisterPage"
+             Shell.NavBarIsVisible="False" Title="Créer un compte">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <comp:BackHeader Title="" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,4,20,16" Spacing="18">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Créer votre compte" Style="{StaticResource Title}" />
+                    <Label Text="Quelques informations suffisent pour commencer." Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+
+                <comp:FormField LabelText="Nom complet" Placeholder="Ex. Aïcha Mbarga"
+                                Text="{Binding FullName, Mode=TwoWay}" ErrorText="{Binding NameError}" />
+                <comp:FormField LabelText="Numéro de téléphone" PrefixText="+237" Placeholder="6 XX XX XX XX"
+                                Keyboard="Telephone" MaxLength="17"
+                                HelperText="Utilisé pour vous notifier par SMS en cas de correspondance."
+                                Text="{Binding Phone, Mode=TwoWay}" ErrorText="{Binding PhoneError}" />
+                <comp:FormField LabelText="Adresse e-mail" IsOptional="True" Placeholder="nom@exemple.cm"
+                                Keyboard="Email"
+                                Text="{Binding Email, Mode=TwoWay}" ErrorText="{Binding EmailError}" />
+                <comp:FormField LabelText="Mot de passe" IsPassword="True" HelperText="8 caractères minimum."
+                                Text="{Binding Password, Mode=TwoWay}" ErrorText="{Binding PasswordError}" />
+                <comp:FormField LabelText="Confirmer le mot de passe" IsPassword="True"
+                                Text="{Binding ConfirmPassword, Mode=TwoWay}" ErrorText="{Binding ConfirmError}" />
+
+                <comp:InfoBanner Kind="Neutral"
+                                 Message="Vos informations personnelles sont protégées et ne seront utilisées que pour le fonctionnement du service." />
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Row="2" Text="{Binding SubmitText}" Style="{StaticResource PrimaryButton}" Margin="20,8,20,20"
+                Command="{Binding RegisterCommand}" IsEnabled="{Binding IsNotBusy}" />
+    </Grid>
+</ContentPage>

@@ -1,6 +1,10 @@
 using LostFoundDocs.Services.Abstractions;
 using LostFoundDocs.Services.Mock;
 using LostFoundDocs.Services.Navigation;
+using LostFoundDocs.ViewModels;
+using LostFoundDocs.Views.Auth;
+using LostFoundDocs.Views.Home;
+using LostFoundDocs.Views.Shared;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -22,6 +26,7 @@ public static class MauiProgram
 
         ConfigureBorderlessEntry();
         RegisterServices(builder.Services);
+        RegisterViewModelsAndPages(builder.Services);
 
 #if DEBUG
         builder.Logging.AddDebug();
@@ -38,6 +43,24 @@ public static class MauiProgram
 
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<INavigationService, ShellNavigationService>();
+    }
+
+    private static void RegisterViewModelsAndPages(IServiceCollection services)
+    {
+        services.AddTransient<LoginViewModel>();
+        services.AddTransient<RegisterViewModel>();
+        services.AddTransient<ForgotPasswordViewModel>();
+        services.AddTransient<HomeViewModel>();
+        services.AddTransient<ProfileViewModel>();
+
+        services.AddTransient<SplashPage>();
+        services.AddTransient<LoginPage>();
+        services.AddTransient<RegisterPage>();
+        services.AddTransient<ForgotPasswordPage>();
+        services.AddTransient<HomePage>();
+        services.AddTransient<ReportsPage>();
+        services.AddTransient<MessagesPage>();
+        services.AddTransient<ProfilePage>();
     }
 
     /// <summary>
