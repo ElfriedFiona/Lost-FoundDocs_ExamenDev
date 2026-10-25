@@ -2,9 +2,6 @@
 
 Application mobile de restitution de documents officiels, académiques, administratifs et professionnels (Douala), développée en **.NET MAUI** (C#, XAML, MVVM).
 
-> ## ⚠️ Frontend uniquement
-> Aucun backend, aucune API, aucune base de données, aucune authentification réelle, aucune notification push, aucune messagerie entre appareils, aucune synchronisation entre utilisateurs. Les données sont **fictives et gardées en mémoire** ; elles disparaissent à la fermeture de l'application. Toutes les simulations sont signalées par `// SIMULATION` dans le code et par des mentions « Simulation » / « Démonstration » dans l'interface. Voir [docs/SIMULATIONS.md](docs/SIMULATIONS.md).
-
 ## Prérequis
 - Windows 10/11, **Visual Studio Community 2022 (17.14 ou plus récent)**
 - Charge de travail **« Développement d'applications multiplateformes .NET »** avec le SDK **.NET 9**
@@ -59,7 +56,6 @@ LostFoundDocs/
 LostFoundDocs.Tests/ tests xUnit des règles pures (validation, statuts, signalements, correspondance, restitution)
 docs/                analyse des maquettes, cas de test, simulations, accessibilité, bilan
 ```
-Pour brancher un backend plus tard : remplacer les enregistrements `Mock…` de `MauiProgram.cs` par des implémentations HTTP des **mêmes interfaces**. Les écrans n'ont pas à être réécrits.
 
 ## Règles garanties par le frontend
 - **Un signalement n'est enregistré qu'une fois** (brouillon `ReportDraft` → `Report`, idempotent, double appui protégé) ; ensuite seul son **statut** évolue (`ReportStatusRules`).
