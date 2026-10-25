@@ -1,0 +1,27 @@
+# Visual Studio / .NET / MAUI
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.log
+*.binlog
+publish/
+AppPackages/
+BundleArtifacts/
+Generated_Files/
+*.apk
+*.aab
+*.msix
+*.pfx
+*.keystore
+*.jks
+# Secrets / local
+appsettings.Local.json
+.env
+*.secrets.json
+# Divers
+.idea/
+.DS_Store
+Thumbs.db
