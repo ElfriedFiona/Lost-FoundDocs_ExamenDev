@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <!--
+    Les règles testées sont de la logique pure : on compile les mêmes fichiers que l'application,
+    sans dépendance à MAUI (donc sans les écrans, la navigation ni MockConversationService).
+  -->
+  <ItemGroup>
+    <Compile Include="..\LostFoundDocs\Models\**\*.cs" />
+    <Compile Include="..\LostFoundDocs\Services\Abstractions\**\*.cs" />
+    <Compile Include="..\LostFoundDocs\Services\Validation\**\*.cs" />
+    <Compile Include="..\LostFoundDocs\Services\Clock.cs" />
+    <Compile Include="..\LostFoundDocs\Services\Navigation\Routes.cs" />
+    <Compile Include="..\LostFoundDocs\Services\Mock\**\*.cs" Exclude="..\LostFoundDocs\Services\Mock\MockConversationService.cs" />
+  </ItemGroup>
+
+</Project>
