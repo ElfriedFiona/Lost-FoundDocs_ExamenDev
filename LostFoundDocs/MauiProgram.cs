@@ -7,6 +7,7 @@ using LostFoundDocs.Views.Home;
 using LostFoundDocs.Views.Shared;
 using LostFoundDocs.Views.Declaration;
 using LostFoundDocs.Views.Matching;
+using LostFoundDocs.Views.Reports;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -69,6 +70,8 @@ public static class MauiProgram
         services.AddTransient<MatchResultViewModel>();
         services.AddTransient<NoMatchViewModel>();
         services.AddTransient<MatchDetailsViewModel>();
+        services.AddTransient<ReportsViewModel>();
+        services.AddTransient<ReportDetailsViewModel>();
 
         services.AddTransient<SplashPage>();
         services.AddTransient<LoginPage>();
@@ -85,6 +88,7 @@ public static class MauiProgram
         services.AddTransient<MatchResultPage>();
         services.AddTransient<NoMatchPage>();
         services.AddTransient<MatchDetailsPage>();
+        services.AddTransient<ReportDetailsPage>();
     }
 
     /// <summary>

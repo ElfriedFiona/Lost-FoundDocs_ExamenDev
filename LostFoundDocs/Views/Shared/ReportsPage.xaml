@@ -1,12 +1,101 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
              x:Class="LostFoundDocs.Views.Shared.ReportsPage"
-             Shell.NavBarIsVisible="False" Title="Mes signalements">
-    <!-- Écran provisoire de la phase A : remplacé en phase B. -->
-    <Grid RowDefinitions="Auto,*,Auto">
-        <Label Text="Mes signalements" Style="{StaticResource Title}" Margin="16,20,16,8" />
-        <comp:EmptyState Grid.Row="1" VerticalOptions="Center" IconGlyph="{x:Static ui:Icons.ClipboardList}"
-                         Title="Bientôt disponible" Message="La liste des signalements (onglets Perdus et Trouvés, filtres, détails) est livrée en phase B." />
-        <comp:BottomNavBar Grid.Row="2" SelectedTab="Reports" />
+             Shell.NavBarIsVisible="False" Title="Signalements">
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+        <Grid ColumnDefinitions="*,Auto" Padding="16,20,16,8">
+            <Label Text="Mes signalements" Style="{StaticResource Title}" VerticalOptions="Center" />
+            <Border Grid.Column="1" WidthRequest="48" HeightRequest="48" BackgroundColor="{StaticResource Primary}" StrokeThickness="0"
+                    SemanticProperties.Description="Nouveau signalement" SemanticProperties.Hint="Déclarer un document perdu ou trouvé">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Label Style="{StaticResource IconLabel}" FontSize="24" TextColor="{StaticResource White}" Text="{x:Static ui:Icons.Plus}" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NewReportCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+        <!-- Onglets Perdus / Trouvés -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" BackgroundColor="{StaticResource White}">
+            <Grid SemanticProperties.Description="Documents perdus" SemanticProperties.Hint="Afficher les documents perdus">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="8" Padding="0,14,0,12">
+                    <Label Text="Perdus" FontFamily="OpenSansSemibold" FontSize="16" TextColor="{StaticResource TextSecondary}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsLostTab}" Value="True">
+                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Border BackgroundColor="{StaticResource NeutralSoft}" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Label Text="{Binding LostCount}" FontSize="12" FontFamily="OpenSansSemibold" TextColor="{StaticResource TextSecondary}" />
+                    </Border>
+                </HorizontalStackLayout>
+                <BoxView HeightRequest="3" VerticalOptions="End" Color="Transparent">
+                    <BoxView.Triggers>
+                        <DataTrigger TargetType="BoxView" Binding="{Binding IsLostTab}" Value="True">
+                            <Setter Property="Color" Value="{StaticResource Primary}" />
+                        </DataTrigger>
+                    </BoxView.Triggers>
+                </BoxView>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectLostCommand}" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            <Grid Grid.Column="1" SemanticProperties.Description="Documents trouvés" SemanticProperties.Hint="Afficher les documents trouvés">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="8" Padding="0,14,0,12">
+                    <Label Text="Trouvés" FontFamily="OpenSansSemibold" FontSize="16" TextColor="{StaticResource TextSecondary}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsFoundTab}" Value="True">
+                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Border BackgroundColor="{StaticResource NeutralSoft}" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Label Text="{Binding FoundCount}" FontSize="12" FontFamily="OpenSansSemibold" TextColor="{StaticResource TextSecondary}" />
+                    </Border>
+                </HorizontalStackLayout>
+                <BoxView HeightRequest="3" VerticalOptions="End" Color="Transparent">
+                    <BoxView.Triggers>
+                        <DataTrigger TargetType="BoxView" Binding="{Binding IsFoundTab}" Value="True">
+                            <Setter Property="Color" Value="{StaticResource Primary}" />
+                        </DataTrigger>
+                    </BoxView.Triggers>
+                </BoxView>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectFoundCommand}" />
+                </Grid.GestureRecognizers>
+            </Grid>
+        </Grid>
+        <BoxView Grid.Row="1" HeightRequest="1" VerticalOptions="End" Color="{StaticResource Border}" InputTransparent="True" />
+
+        <!-- Filtre par statut -->
+        <comp:ChipGroup Grid.Row="2" Margin="16,12,16,0" Items="{Binding FilterOptions}"
+                        SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" SelectOnTap="True" />
+
+        <ScrollView Grid.Row="3">
+            <VerticalStackLayout Padding="16,4,16,16" Spacing="12">
+                <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Items}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <comp:ReportCard ShowLocation="True" Tapped="OnReportTapped" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasNoItems}">
+                    <comp:EmptyState IconGlyph="{x:Static ui:Icons.FileText}" Title="{Binding EmptyTitle}" Message="{Binding EmptyMessage}"
+                                     ActionText="{Binding EmptyAction}" ActionCommand="{Binding DeclareCommand}" />
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <comp:BottomNavBar Grid.Row="4" SelectedTab="Reports" />
     </Grid>
 </ContentPage>

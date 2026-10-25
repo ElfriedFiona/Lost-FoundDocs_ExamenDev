@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Reports.ReportDetailsPage"
+             Shell.NavBarIsVisible="False" Title="Détails du signalement">
+    <Grid RowDefinitions="Auto,*">
+        <comp:BackHeader Title="Détails du signalement" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="16">
+                <Border Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0" VerticalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource Primary}" Text="{Binding IconGlyph}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="{Binding Title}" Style="{StaticResource SectionTitle}" />
+                            <Label Text="{Binding Reference}" Style="{StaticResource Caption}" />
+                            <comp:StatusBadge Text="{Binding StatusLabel}" Kind="{Binding StatusKind}" ShowCheck="{Binding StatusShowCheck}" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource Card}" Padding="0">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Padding="16,10">
+                                    <Label Text="{Binding Label}" Style="{StaticResource Caption}" />
+                                    <Label Grid.Column="1" Text="{Binding Value}" HorizontalTextAlignment="End" FontFamily="OpenSansSemibold" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Historique" Style="{StaticResource SectionTitle}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Timeline}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <HorizontalStackLayout Spacing="10">
+                                    <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="{StaticResource Primary}" VerticalOptions="Start" Margin="0,7,0,0" />
+                                    <Label Text="{Binding .}" FontSize="14" />
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Actions" Style="{StaticResource SectionTitle}" />
+                <Button Text="{Binding SearchText}" Style="{StaticResource PrimaryButton}" Command="{Binding SearchCommand}" IsVisible="{Binding CanSearch}" />
+                <Button Text="Voir la correspondance" Style="{StaticResource PrimaryButton}" Command="{Binding SeeMatchCommand}" IsVisible="{Binding CanSeeMatch}" />
+                <Button Text="Organiser la restitution" Style="{StaticResource SoftButton}" Command="{Binding OrganizeCommand}" IsVisible="{Binding CanOrganize}" />
+                <Button Text="Ouvrir la conversation" Style="{StaticResource SecondaryButton}" Command="{Binding ConversationCommand}" IsVisible="{Binding CanOpenConversation}" />
+                <Button Text="Voir la preuve de restitution" Style="{StaticResource PrimaryButton}" Command="{Binding ProofCommand}" IsVisible="{Binding CanSeeProof}" />
+                <Button Text="Clôturer : j’ai récupéré mon document" Style="{StaticResource SecondaryButton}" Command="{Binding CloseRecoveredCommand}" IsVisible="{Binding CanCloseRecovered}" />
+                <Button Text="Annuler le signalement" Style="{StaticResource TextButton}" TextColor="{StaticResource ErrorText}" Command="{Binding CancelReportCommand}" IsVisible="{Binding CanCancel}" />
+                <Label Text="Aucune action disponible pour ce signalement." Style="{StaticResource Caption}" IsVisible="{Binding HasNoActions}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
