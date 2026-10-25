@@ -13,15 +13,20 @@ public sealed class HomeViewModel : ViewModelBase
     private readonly IAuthService _auth;
     private readonly IReportService _reports;
     private readonly INavigationService _nav;
+    private readonly IConversationService _conversations;
+    private readonly INotificationService _notifications;
     private string _firstName = string.Empty;
     private int _searchCount;
     private DateTime? _simulatedLastCheck;
 
-    public HomeViewModel(IAuthService auth, IReportService reports, INavigationService nav)
+    public HomeViewModel(IAuthService auth, IReportService reports, INavigationService nav,
+                         IConversationService conversations, INotificationService notifications)
     {
         _auth = auth;
         _reports = reports;
         _nav = nav;
+        _conversations = conversations;
+        _notifications = notifications;
         DeclareLostCommand = new AsyncCommand(() => _nav.GoToAsync(Routes.DeclareLost));
         DeclareFoundCommand = new AsyncCommand(() => _nav.GoToAsync(Routes.DeclareFound));
         SeeAllCommand = new AsyncCommand(() => _nav.GoToAsync("//" + Routes.Reports));
@@ -42,8 +47,8 @@ public sealed class HomeViewModel : ViewModelBase
     public string Greeting => $"Bonjour, {_firstName} 👋";
     public bool HasReports => ActiveReports.Count > 0;
     public bool HasNoReports => !HasReports;
-    public int UnreadMessages => 0;                  // branché en phase B (messagerie)
-    public bool HasUnreadNotifications => false;     // branché en phase B (notifications)
+    public int UnreadMessages => _conversations.TotalUnread;
+    public bool HasUnreadNotifications => _notifications.UnreadCount > 0;
 
     public string SearchSummary
     {
@@ -73,5 +78,7 @@ public sealed class HomeViewModel : ViewModelBase
         OnPropertyChanged(nameof(HasReports));
         OnPropertyChanged(nameof(HasNoReports));
         OnPropertyChanged(nameof(SearchSummary));
+        OnPropertyChanged(nameof(UnreadMessages));
+        OnPropertyChanged(nameof(HasUnreadNotifications));
     }
 }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             xmlns:local="clr-namespace:LostFoundDocs.Views.Messages"
+             x:Class="LostFoundDocs.Views.Messages.ConversationPage"
+             Shell.NavBarIsVisible="False" Title="Conversation">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="MineTemplate">
+            <VerticalStackLayout HorizontalOptions="End" Spacing="2" Margin="0,4">
+                <Label Text="Vous" Style="{StaticResource Caption}" FontSize="12" HorizontalTextAlignment="End" />
+                <Border BackgroundColor="{StaticResource Primary}" StrokeThickness="0" Padding="14,10" MaximumWidthRequest="290">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="18,18,4,18" />
+                    </Border.StrokeShape>
+                    <Label Text="{Binding Text}" TextColor="{StaticResource White}" />
+                </Border>
+                <Label Text="{Binding TimeLabel}" Style="{StaticResource Caption}" FontSize="11" HorizontalTextAlignment="End" />
+            </VerticalStackLayout>
+        </DataTemplate>
+        <DataTemplate x:Key="TheirsTemplate">
+            <VerticalStackLayout HorizontalOptions="Start" Spacing="2" Margin="0,4">
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderBrush}" StrokeThickness="1" Padding="14,10" MaximumWidthRequest="290">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="18,18,18,4" />
+                    </Border.StrokeShape>
+                    <Label Text="{Binding Text}" />
+                </Border>
+                <Label Text="Réponse simulée" Style="{StaticResource Caption}" FontSize="11" TextColor="{StaticResource WarningText}"
+                       IsVisible="{Binding IsSimulatedReply}" />
+                <Label Text="{Binding TimeLabel}" Style="{StaticResource Caption}" FontSize="11" />
+            </VerticalStackLayout>
+        </DataTemplate>
+        <DataTemplate x:Key="SystemTemplate">
+            <Border BackgroundColor="{StaticResource NeutralSoft}" StrokeThickness="0" Padding="12,6" HorizontalOptions="Center" Margin="0,6">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+                <Label Text="{Binding Text}" Style="{StaticResource Caption}" FontSize="12" HorizontalTextAlignment="Center" />
+            </Border>
+        </DataTemplate>
+        <local:MessageTemplateSelector x:Key="MessageSelector" MineTemplate="{StaticResource MineTemplate}"
+                                       TheirsTemplate="{StaticResource TheirsTemplate}" SystemTemplate="{StaticResource SystemTemplate}" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid ColumnDefinitions="Auto,*,Auto" BackgroundColor="{StaticResource White}" Padding="8,8,12,8" ColumnSpacing="4">
+            <Label Style="{StaticResource IconLabel}" FontSize="24" TextColor="{StaticResource TextPrimary}" Text="{x:Static ui:Icons.ChevronLeft}"
+                   WidthRequest="44" HeightRequest="44" SemanticProperties.Description="Retour">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Label Text="Correspondance" Style="{StaticResource Caption}" FontSize="12" />
+                <Label Text="{Binding Title}" FontFamily="OpenSansSemibold" FontSize="17" SemanticProperties.HeadingLevel="Level1" />
+                <Label Text="{Binding WithLine}" Style="{StaticResource Caption}" FontSize="13" />
+            </VerticalStackLayout>
+            <Border Grid.Column="2" BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0" Padding="12,8" VerticalOptions="Center"
+                    SemanticProperties.Description="Restitution" SemanticProperties.Hint="Organiser la restitution du document">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="6">
+                    <Label Style="{StaticResource IconLabel}" FontSize="18" TextColor="{StaticResource Primary}" Text="{x:Static ui:Icons.Handshake}" />
+                    <Label Text="Restitution" TextColor="{StaticResource Primary}" FontFamily="OpenSansSemibold" FontSize="14" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RestitutionCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1" x:Name="Scroller" BackgroundColor="{StaticResource Background}">
+            <VerticalStackLayout x:Name="MessagesStack" Padding="16,12,16,12" Spacing="2">
+                <comp:InfoBanner Kind="Neutral" Message="Cette conversation concerne la restitution d’un document. Ne partagez aucun numéro complet ni information personnelle inutile." />
+                <comp:InfoBanner Kind="Warning" Message="Démonstration : cette messagerie est locale, aucun message ne quitte l’appareil." Margin="0,8,0,8" />
+                <Label Text="Aucun message pour l’instant. Écrivez le premier !" Style="{StaticResource Caption}" HorizontalTextAlignment="Center"
+                       IsVisible="{Binding HasNoMessages}" Margin="0,16" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Messages}"
+                                     BindableLayout.ItemTemplateSelector="{StaticResource MessageSelector}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" BackgroundColor="{StaticResource White}" Spacing="0">
+            <BoxView HeightRequest="1" Color="{StaticResource Border}" />
+            <Label Text="{Binding Error}" TextColor="{StaticResource ErrorText}" FontSize="13" Margin="16,6,16,0" IsVisible="{Binding HasError}" />
+            <Label Text="Cette conversation est clôturée : la restitution a été confirmée." Style="{StaticResource Caption}" Margin="16,12"
+                   HorizontalTextAlignment="Center" IsVisible="{Binding IsClosed}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Padding="12,10" IsVisible="{Binding IsOpen}">
+                <Border Stroke="{StaticResource BorderBrush}" StrokeThickness="1" BackgroundColor="{StaticResource White}" MinimumHeightRequest="48">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24" />
+                    </Border.StrokeShape>
+                    <Entry Placeholder="Écrire un message…" Text="{Binding DraftText, Mode=TwoWay}" Margin="16,0" VerticalOptions="Center"
+                           ReturnType="Send" ReturnCommand="{Binding SendCommand}" SemanticProperties.Description="Écrire un message" />
+                </Border>
+                <Button Grid.Column="1" Text="Envoyer" Style="{StaticResource PrimaryButton}" WidthRequest="100" Command="{Binding SendCommand}"
+                        IsEnabled="{Binding CanSend}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

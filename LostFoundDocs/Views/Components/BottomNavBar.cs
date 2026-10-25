@@ -14,7 +14,33 @@ public sealed class BottomNavBar : ContentView
         BindableProperty.Create(nameof(MessagesBadge), typeof(int), typeof(BottomNavBar), 0,
             propertyChanged: (b, _, _) => ((BottomNavBar)b).Build());
 
-    public BottomNavBar() => Build();
+    private IConversationService? _conversations;
+
+    public BottomNavBar()
+    {
+        Build();
+        Loaded += (_, _) => Attach();
+        Unloaded += (_, _) => Detach();
+    }
+
+    // Le compteur de messages non lus suit le service de messagerie (pastille rouge de l'onglet Messages).
+    private void Attach()
+    {
+        if (_conversations is not null) return;
+        _conversations = ServiceHelper.Get<IConversationService>();
+        _conversations.Changed += OnConversationsChanged;
+        MessagesBadge = _conversations.TotalUnread;
+    }
+
+    private void Detach()
+    {
+        if (_conversations is null) return;
+        _conversations.Changed -= OnConversationsChanged;
+        _conversations = null;
+    }
+
+    private void OnConversationsChanged(object? sender, EventArgs e) =>
+        MainThread.BeginInvokeOnMainThread(() => MessagesBadge = _conversations?.TotalUnread ?? 0);
 
     public AppTab SelectedTab { get => (AppTab)GetValue(SelectedTabProperty); set => SetValue(SelectedTabProperty, value); }
     public int MessagesBadge { get => (int)GetValue(MessagesBadgeProperty); set => SetValue(MessagesBadgeProperty, value); }

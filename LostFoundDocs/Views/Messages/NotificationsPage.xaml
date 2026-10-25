@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Messages.NotificationsPage"
+             Shell.NavBarIsVisible="False" Title="Notifications">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="RowTemplate">
+            <Border StrokeThickness="0" Padding="16,14" BackgroundColor="{StaticResource White}">
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding Notification.IsUnread}" Value="True">
+                        <Setter Property="BackgroundColor" Value="#F2F7FF" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{Binding Background}" StrokeThickness="0" VerticalOptions="Start">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="22" />
+                        </Border.StrokeShape>
+                        <Label Style="{StaticResource IconLabel}" FontSize="20" Text="{Binding Glyph}" TextColor="{Binding Foreground}" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                        <Label Text="{Binding Notification.Header}" Style="{StaticResource Caption}" FontSize="12" />
+                        <Label Text="{Binding Notification.Title}" FontFamily="OpenSansSemibold" FontSize="15" />
+                        <Label Text="{Binding Notification.Detail}" Style="{StaticResource Caption}" FontSize="13" IsVisible="{Binding Notification.HasDetail}" />
+                    </VerticalStackLayout>
+                    <BoxView Grid.Column="2" WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{StaticResource Primary}"
+                             VerticalOptions="Start" Margin="0,6,0,0" IsVisible="{Binding Notification.IsUnread}"
+                             SemanticProperties.Description="Non lue" />
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRowTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid ColumnDefinitions="*,Auto" BackgroundColor="{StaticResource White}" Padding="8,8,12,8">
+            <comp:BackHeader Title="Notifications" />
+            <Button Grid.Column="1" Text="Tout marquer lu" Style="{StaticResource TextButton}" Command="{Binding MarkAllReadCommand}" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0">
+                <Label Text="Aujourd’hui" Style="{StaticResource Caption}" Padding="16,12,16,6" IsVisible="{Binding HasToday}" />
+                <VerticalStackLayout Spacing="1" BindableLayout.ItemsSource="{Binding Today}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}" />
+                <Label Text="Plus tôt" Style="{StaticResource Caption}" Padding="16,16,16,6" IsVisible="{Binding HasEarlier}" />
+                <VerticalStackLayout Spacing="1" BindableLayout.ItemsSource="{Binding Earlier}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}" />
+                <comp:EmptyState IsVisible="{Binding IsEmpty}" IconGlyph="{x:Static ui:Icons.Bell}" Title="Aucune notification"
+                                 Message="Vous serez prévenu ici dès qu’une correspondance sera trouvée ou qu’un message arrivera (simulation)." Margin="0,40,0,0" />
+                <Label Text="Démonstration : ces notifications sont générées localement, aucune notification réelle n’est envoyée."
+                       Style="{StaticResource Caption}" FontSize="12" Padding="16,16" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
