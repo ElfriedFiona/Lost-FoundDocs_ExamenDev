@@ -1,3 +1,6 @@
+using LostFoundDocs.Services.Abstractions;
+using LostFoundDocs.Services.Mock;
+using LostFoundDocs.Services.Navigation;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -18,11 +21,23 @@ public static class MauiProgram
             });
 
         ConfigureBorderlessEntry();
+        RegisterServices(builder.Services);
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
         return builder.Build();
+    }
+
+    private static void RegisterServices(IServiceCollection services)
+    {
+        // SIMULATION (frontend uniquement) : implémentations en mémoire.
+        // Phase backend : remplacer uniquement ces deux lignes par des implémentations HTTP.
+        services.AddSingleton<IAuthService, MockAuthService>();
+        services.AddSingleton<IReportService, MockReportService>();
+
+        services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<INavigationService, ShellNavigationService>();
     }
 
     /// <summary>
