@@ -37,7 +37,12 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-        return builder.Build();
+        var app = builder.Build();
+#if DEBUG
+        // Contrôle de cohérence chronologique en exécution (résultat dans la fenêtre Sortie).
+        app.Services.GetRequiredService<DemoConsistencyMonitor>();
+#endif
+        return app;
     }
 
     private static void RegisterServices(IServiceCollection services)
@@ -54,6 +59,7 @@ public static class MauiProgram
         services.AddSingleton<INotificationService, MockNotificationService>();
         services.AddSingleton<IMatchService, MockMatchService>();
         services.AddSingleton<IRestitutionService, MockRestitutionService>();
+        services.AddSingleton<DemoConsistencyMonitor>();
 
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<INavigationService, ShellNavigationService>();
