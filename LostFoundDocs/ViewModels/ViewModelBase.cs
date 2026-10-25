@@ -1,3 +1,4 @@
+using System.Reflection;
 using LostFoundDocs.Models;
 
 namespace LostFoundDocs.ViewModels;
@@ -19,4 +20,13 @@ public abstract class ViewModelBase : ObservableObject
     }
 
     public bool IsNotBusy => !IsBusy;
+
+    /// <summary>Notifie toutes les propriétés publiques (rechargement complet d'un écran après chargement des données).</summary>
+    protected void RaiseAll()
+    {
+        foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        {
+            OnPropertyChanged(property.Name);
+        }
+    }
 }

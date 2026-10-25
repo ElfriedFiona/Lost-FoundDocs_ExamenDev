@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Matching.MatchResultPage"
+             Shell.NavBarIsVisible="False" Title="Correspondance trouvée">
+    <Grid>
+        <Grid RowDefinitions="Auto,*,Auto">
+            <Label Style="{StaticResource IconLabel}" FontSize="24" TextColor="{StaticResource TextPrimary}" Margin="12,12,0,0"
+                   HorizontalOptions="Start" WidthRequest="44" HeightRequest="44" Text="{x:Static ui:Icons.X}"
+                   SemanticProperties.Description="Fermer">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CloseCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Padding="16,0,16,24" Spacing="14">
+                    <Border WidthRequest="72" HeightRequest="72" BackgroundColor="{StaticResource SuccessSoft}" StrokeThickness="0" HorizontalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="36" />
+                        </Border.StrokeShape>
+                        <Border WidthRequest="48" HeightRequest="48" BackgroundColor="{StaticResource Success}" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="24" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource IconLabel}" FontSize="24" TextColor="{StaticResource White}" Text="{x:Static ui:Icons.Check}" />
+                        </Border>
+                    </Border>
+                    <Label Text="Correspondance trouvée" Style="{StaticResource Title}" HorizontalTextAlignment="Center" FontSize="24" />
+                    <Label Text="{Binding Subtitle}" Style="{StaticResource Subtitle}" HorizontalTextAlignment="Center" />
+
+                    <comp:InfoBanner Kind="Success" Title="Le propriétaire a été notifié automatiquement"
+                                     Message="Il peut maintenant vous écrire pour organiser la restitution (simulation)."
+                                     IsVisible="{Binding ShowFinderBanner}" />
+                    <comp:InfoBanner Kind="Info" Title="Merci pour votre signalement" Message="{Binding DisputeMessage}"
+                                     IsVisible="{Binding IsDisputed}" />
+
+                    <comp:MatchCard />
+                </VerticalStackLayout>
+            </ScrollView>
+            <VerticalStackLayout Grid.Row="2" Padding="16,8,16,12" Spacing="4" BackgroundColor="{StaticResource White}">
+                <Button Text="{Binding PrimaryText}" Style="{StaticResource PrimaryButton}" Command="{Binding PrimaryCommand}" />
+                <Button Style="{StaticResource TextButton}" Command="{Binding ReportErrorCommand}" IsEnabled="{Binding CanReportError}"
+                        Text="Signaler une erreur" />
+            </VerticalStackLayout>
+        </Grid>
+        <comp:ReasonDialog />
+    </Grid>
+</ContentPage>

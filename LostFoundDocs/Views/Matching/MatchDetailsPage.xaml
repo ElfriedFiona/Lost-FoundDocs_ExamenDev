@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Matching.MatchDetailsPage"
+             Shell.NavBarIsVisible="False" Title="Détails de la correspondance">
+    <Grid>
+        <Grid RowDefinitions="Auto,*,Auto">
+            <comp:BackHeader Title="Détails de la correspondance" Margin="8,8,8,0" />
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Padding="16,8,16,24" Spacing="14">
+                    <Label Text="{Binding Heading}" Style="{StaticResource SectionTitle}" />
+                    <Label Text="{Binding SignalementSummary}" Style="{StaticResource Caption}" />
+                    <comp:InfoBanner Kind="Info" Title="Merci pour votre signalement" Message="{Binding DisputeMessage}"
+                                     IsVisible="{Binding IsDisputed}" />
+                    <comp:MatchCard />
+                </VerticalStackLayout>
+            </ScrollView>
+            <VerticalStackLayout Grid.Row="2" Padding="16,8,16,12" Spacing="4" BackgroundColor="{StaticResource White}">
+                <Button Text="{Binding ContactText}" Style="{StaticResource PrimaryButton}" Command="{Binding ContactCommand}" />
+                <Button Style="{StaticResource TextButton}" Command="{Binding ReportErrorCommand}" IsEnabled="{Binding CanReportError}"
+                        Text="Signaler une erreur" />
+            </VerticalStackLayout>
+        </Grid>
+        <comp:ReasonDialog />
+    </Grid>
+</ContentPage>

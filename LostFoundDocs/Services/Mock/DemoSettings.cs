@@ -15,5 +15,17 @@ public static class DemoSettings
     public const string ResetCode = "123456";             // code SMS fictif (aucun SMS n'est envoyé)
 
     public static int SimulatedLatencyMs { get; set; } = 500;
-    public static MatchMode MatchMode { get; set; } = MatchMode.Auto;   // utilisé en phase B
+
+    /// <summary>Règle de la recherche de correspondance (modifiable dans À propos &gt; Mode démonstration).</summary>
+    public static MatchMode MatchMode { get; set; } = MatchMode.Auto;
+
+    /// <summary>Réponse automatique fictive dans les conversations.</summary>
+    public static bool AutoReply { get; set; } = true;
+
+    // Préférences de notification (Profil > Notifications) : stockées en mémoire, sans effet réel.
+    public static bool NotifyMatches { get; set; } = true;
+    public static bool NotifyMessages { get; set; } = true;
+    public static bool NotifyRestitution { get; set; } = true;
+    public static bool NotifyReminders { get; set; } = true;
+    public static bool NotifyBySms { get; set; } = true;
 }

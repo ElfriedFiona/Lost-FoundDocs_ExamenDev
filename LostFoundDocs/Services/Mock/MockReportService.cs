@@ -10,7 +10,7 @@ namespace LostFoundDocs.Services.Mock;
 /// Garanties : un signalement est enregistré une seule fois (idempotence du brouillon) et son statut évolue
 /// sur le même objet, sans doublon.
 /// </summary>
-public sealed class MockReportService : IReportService
+public sealed class MockReportService : IReportService, IResettable
 {
     private readonly IAuthService _auth;
     private readonly Dictionary<Guid, List<Report>> _store = new();
@@ -43,6 +43,18 @@ public sealed class MockReportService : IReportService
         {
             return Task.FromResult(CurrentList().FirstOrDefault(r => r.Id == id));
         }
+    }
+
+    /// <summary>SIMULATION : repart du jeu de données fictif d'origine (À propos &gt; Réinitialiser).</summary>
+    public void Reset()
+    {
+        lock (_gate)
+        {
+            _store.Clear();
+            _references.Clear();
+            _nextReference = 10001;
+        }
+        ReportsChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public async Task<Report> SubmitAsync(ReportDraft draft)

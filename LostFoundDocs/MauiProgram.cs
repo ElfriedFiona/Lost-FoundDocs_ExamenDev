@@ -6,6 +6,7 @@ using LostFoundDocs.Views.Auth;
 using LostFoundDocs.Views.Home;
 using LostFoundDocs.Views.Shared;
 using LostFoundDocs.Views.Declaration;
+using LostFoundDocs.Views.Matching;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -40,7 +41,15 @@ public static class MauiProgram
         // SIMULATION (frontend uniquement) : implémentations en mémoire.
         // Phase backend : remplacer ces enregistrements par des implémentations HTTP des mêmes interfaces.
         services.AddSingleton<IAuthService, MockAuthService>();
-        services.AddSingleton<IReportService, MockReportService>();
+        services.AddSingleton<MockReportService>();
+        services.AddSingleton<IReportService>(sp => sp.GetRequiredService<MockReportService>());
+        services.AddSingleton<IResettable>(sp => sp.GetRequiredService<MockReportService>());
+        services.AddSingleton<DemoWorld>();
+        services.AddSingleton<IResettable>(sp => sp.GetRequiredService<DemoWorld>());
+        services.AddSingleton<IConversationService, MockConversationService>();
+        services.AddSingleton<INotificationService, MockNotificationService>();
+        services.AddSingleton<IMatchService, MockMatchService>();
+        services.AddSingleton<IRestitutionService, MockRestitutionService>();
 
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<INavigationService, ShellNavigationService>();
@@ -56,6 +65,10 @@ public static class MauiProgram
         services.AddTransient<DeclareLostViewModel>();
         services.AddTransient<DeclareFoundViewModel>();
         services.AddTransient<DeclarationConfirmationViewModel>();
+        services.AddTransient<SearchViewModel>();
+        services.AddTransient<MatchResultViewModel>();
+        services.AddTransient<NoMatchViewModel>();
+        services.AddTransient<MatchDetailsViewModel>();
 
         services.AddTransient<SplashPage>();
         services.AddTransient<LoginPage>();
@@ -68,6 +81,10 @@ public static class MauiProgram
         services.AddTransient<DeclareLostPage>();
         services.AddTransient<DeclareFoundPage>();
         services.AddTransient<DeclarationConfirmationPage>();
+        services.AddTransient<SearchPage>();
+        services.AddTransient<MatchResultPage>();
+        services.AddTransient<NoMatchPage>();
+        services.AddTransient<MatchDetailsPage>();
     }
 
     /// <summary>

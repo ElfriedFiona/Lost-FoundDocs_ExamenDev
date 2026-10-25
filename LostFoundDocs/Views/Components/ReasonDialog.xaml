@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:comp="clr-namespace:LostFoundDocs.Views.Components"
+             x:Class="LostFoundDocs.Views.Components.ReasonDialog">
+    <!-- Modale « Signaler une erreur ». Liaisons vers MatchViewModelBase (IsReasonOpen, ReasonOptions, SelectedReason…). -->
+    <Grid BackgroundColor="#88000000" IsVisible="{Binding IsReasonOpen}">
+        <Border Style="{StaticResource Card}" Margin="24" Padding="20" VerticalOptions="Center">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20" />
+            </Border.StrokeShape>
+            <VerticalStackLayout Spacing="14">
+                <Label Text="Signaler une erreur" Style="{StaticResource SectionTitle}" />
+                <Label Text="Indiquez pourquoi cette correspondance vous semble incorrecte." Style="{StaticResource Subtitle}" FontSize="14" />
+                <comp:OptionList Items="{Binding ReasonOptions}" SelectedItem="{Binding SelectedReason, Mode=TwoWay}" />
+                <Label Text="{Binding ReasonError}" TextColor="{StaticResource ErrorText}" FontSize="13" IsVisible="{Binding HasReasonError}" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button Text="Annuler" Style="{StaticResource SecondaryButton}" Command="{Binding CancelReasonCommand}" />
+                    <Button Grid.Column="1" Text="Envoyer" Style="{StaticResource PrimaryButton}" Command="{Binding SendReasonCommand}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentView>

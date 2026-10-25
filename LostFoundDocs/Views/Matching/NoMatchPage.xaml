@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Matching.NoMatchPage"
+             Shell.NavBarIsVisible="False" Title="Aucune correspondance">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="20,40,20,24" Spacing="16">
+                <Border WidthRequest="88" HeightRequest="88" BackgroundColor="{StaticResource WarningSoft}" StrokeThickness="0" HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="44" />
+                    </Border.StrokeShape>
+                    <Label Style="{StaticResource IconLabel}" FontSize="40" TextColor="{StaticResource WarningText}" Text="{x:Static ui:Icons.SearchX}" />
+                </Border>
+                <Label Text="Aucune correspondance pour l’instant" Style="{StaticResource Title}" HorizontalTextAlignment="Center" FontSize="24" />
+                <Label Text="Aucun document compatible n’a été trouvé parmi les déclarations déjà enregistrées. Votre signalement reste actif."
+                       Style="{StaticResource Subtitle}" HorizontalTextAlignment="Center" />
+                <Label Text="Vous n’avez rien d’autre à faire : chaque nouveau document déclaré sera comparé à votre signalement."
+                       Style="{StaticResource Caption}" HorizontalTextAlignment="Center" />
+                <comp:InfoBanner Kind="Warning" Title="Recherche automatique : backend à venir"
+                                 Message="Dans cette démonstration, la recherche est simulée localement. La recherche automatique réelle et continue sera développée avec le backend." />
+                <comp:InfoBanner Kind="Info" Message="{Binding RetryMessage}" IsVisible="{Binding HasRetryMessage}" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="10" BackgroundColor="{StaticResource White}">
+            <Button Text="Voir mon signalement" Style="{StaticResource PrimaryButton}" Command="{Binding SeeReportCommand}" />
+            <Button Text="Relancer la recherche" Style="{StaticResource SoftButton}" Command="{Binding RetryCommand}" IsEnabled="{Binding IsNotBusy}" />
+            <Button Text="Retour à l’accueil" Style="{StaticResource TextButton}" Command="{Binding HomeCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
