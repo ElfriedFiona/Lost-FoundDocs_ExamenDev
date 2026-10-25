@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Declaration.DeclareLostPage"
+             Shell.NavBarIsVisible="False" Title="Document perdu">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <comp:BackHeader Title="Document perdu" BackCommand="{Binding BackCommand}" Margin="8,8,8,0" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="18">
+                <Label Text="Renseignez les informations nécessaires pour permettre au système de rechercher une correspondance."
+                       Style="{StaticResource Subtitle}" IsVisible="{Binding IsStep1}" />
+                <comp:StepProgressBar Total="4" Current="{Binding Step}" />
+                <comp:InfoBanner Kind="Error" Message="{Binding FormError}" IsVisible="{Binding HasFormError}" />
+
+                <!-- Étape 1 : type -->
+                <VerticalStackLayout Spacing="16" IsVisible="{Binding IsStep1}">
+                    <Label Text="Type de document" Style="{StaticResource SectionTitle}" />
+                    <comp:SelectField LabelText="Type de document" Placeholder="Sélectionnez un type"
+                                      Items="{Binding TypeLabels}" SelectedItem="{Binding SelectedTypeLabel, Mode=TwoWay}"
+                                      ErrorText="{Binding TypeError}" />
+                    <Border Style="{StaticResource Card}" BackgroundColor="{StaticResource Background}" IsVisible="{Binding HasType}">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Pour ce document, nous vous demanderons :" FontFamily="OpenSansSemibold" FontSize="14" />
+                            <Label Text="{Binding TypeHint}" Style="{StaticResource Caption}" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Style="{StaticResource IconLabel}" FontSize="18" Text="{x:Static ui:Icons.Clock}" />
+                        <Label Text="Environ 1 minute · aucun champ inutile" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- Étape 2 : identité -->
+                <VerticalStackLayout Spacing="16" IsVisible="{Binding IsStep2}">
+                    <Label Text="Informations d’identité" Style="{StaticResource SectionTitle}" />
+                    <comp:FormField LabelText="Nom complet" Placeholder="Ex. Aïcha Mbarga"
+                                    HelperText="Tel qu’il apparaît sur le document."
+                                    Text="{Binding HolderName, Mode=TwoWay}" ErrorText="{Binding NameError}" />
+                    <comp:FormField LabelText="Intitulé du document" Placeholder="Ex. Attestation de résidence"
+                                    IsVisible="{Binding IsOtherType}"
+                                    Text="{Binding CustomTitle, Mode=TwoWay}" ErrorText="{Binding CustomTitleError}" />
+                    <comp:DateField LabelText="Date de naissance" IsOptional="True"
+                                    HelperText="Utilisée uniquement pour la correspondance, jamais affichée en entier."
+                                    SelectedDate="{Binding BirthDate, Mode=TwoWay}" ErrorText="{Binding BirthError}" />
+                    <comp:FormField LabelText="{Binding NumberLabel}" IsOptional="True" BadgeText="{Binding NumberBadge}"
+                                    Placeholder="{Binding NumberPlaceholder}"
+                                    HelperText="Améliore fortement la correspondance. Masqué partout dans l’application."
+                                    Text="{Binding Number, Mode=TwoWay}" ErrorText="{Binding NumberError}" />
+                    <comp:FormField LabelText="{Binding IssuerLabel}" IsOptional="True" Placeholder="{Binding IssuerPlaceholder}"
+                                    Text="{Binding Issuer, Mode=TwoWay}" />
+                </VerticalStackLayout>
+
+                <!-- Étape 3 : circonstances -->
+                <VerticalStackLayout Spacing="16" IsVisible="{Binding IsStep3}">
+                    <Label Text="Circonstances de la perte" Style="{StaticResource SectionTitle}" />
+                    <comp:DateField LabelText="Date de perte" HelperText="Approximative si vous n’êtes pas sûr(e)."
+                                    SelectedDate="{Binding EventDate, Mode=TwoWay}" ErrorText="{Binding DateError}" />
+                    <comp:SelectField LabelText="Ville" Items="{Binding CityOptions}" SelectedItem="{Binding City, Mode=TwoWay}" />
+                    <comp:FormField LabelText="Lieu de la perte" Placeholder="Ex. Université de Douala"
+                                    Text="{Binding Place, Mode=TwoWay}" ErrorText="{Binding PlaceError}" />
+                    <comp:ChipGroup Items="{Binding QuickPlaces}" ItemTappedCommand="{Binding PlaceChipCommand}" />
+                    <comp:NotesField LabelText="Informations complémentaires" IsOptional="True"
+                                     Placeholder="Ex. dans une pochette bleue avec ma carte d’étudiant"
+                                     HelperText="N’indiquez aucun numéro de document complet ici."
+                                     Text="{Binding Notes, Mode=TwoWay}" ErrorText="{Binding NotesError}" />
+                </VerticalStackLayout>
+
+                <!-- Étape 4 : photo et vérification -->
+                <VerticalStackLayout Spacing="16" IsVisible="{Binding IsStep4}">
+                    <Label Text="Photo et vérification" Style="{StaticResource SectionTitle}" />
+                    <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource InfoStrokeBrush}" StrokeThickness="2"
+                            Padding="20" SemanticProperties.Description="Ajouter une photo du document" IsVisible="{Binding HasNoPhoto}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="28" />
+                                </Border.StrokeShape>
+                                <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource Primary}" Text="{x:Static ui:Icons.Camera}" />
+                            </Border>
+                            <Label Text="Ajouter une photo du document" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" />
+                            <Label Text="Prendre une photo ou choisir dans la galerie · JPG, PNG · 10 Mo max" Style="{StaticResource Caption}"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PickPhotoCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasPhoto}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource Primary}" Text="{x:Static ui:Icons.Image}" />
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding PhotoName}" FontFamily="OpenSansSemibold" FontSize="14" />
+                                <Label Text="Photo fictive (simulation)" Style="{StaticResource Caption}" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="2" Text="Supprimer" Style="{StaticResource TextButton}" Command="{Binding RemovePhotoCommand}" />
+                        </Grid>
+                    </Border>
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Style="{StaticResource IconLabel}" FontSize="18" TextColor="{StaticResource Primary}" Text="{x:Static ui:Icons.Lock}" />
+                        <Label Text="La photo est utilisée pour faciliter l’identification et n’est pas affichée publiquement."
+                               Style="{StaticResource Caption}" />
+                    </HorizontalStackLayout>
+
+                    <Border Style="{StaticResource Card}" Padding="0">
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="*,Auto" Padding="16,12">
+                                <Label Text="Récapitulatif" Style="{StaticResource CardTitle}" VerticalOptions="Center" />
+                                <Button Grid.Column="1" Text="Modifier" Style="{StaticResource TextButton}" Command="{Binding EditCommand}" />
+                            </Grid>
+                            <BoxView HeightRequest="1" Color="{StaticResource Border}" />
+                            <Grid ColumnDefinitions="Auto,*" Padding="16,10" ColumnSpacing="16">
+                                <Label Text="Document" Style="{StaticResource Caption}" />
+                                <Label Grid.Column="1" Text="{Binding SummaryDocument}" HorizontalTextAlignment="End" FontFamily="OpenSansSemibold" />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" Padding="16,10" ColumnSpacing="16">
+                                <Label Text="Nom" Style="{StaticResource Caption}" />
+                                <Label Grid.Column="1" Text="{Binding SummaryName}" HorizontalTextAlignment="End" FontFamily="OpenSansSemibold" />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" Padding="16,10,16,14" ColumnSpacing="16">
+                                <Label Text="Perte" Style="{StaticResource Caption}" />
+                                <Label Grid.Column="1" Text="{Binding SummaryEvent}" HorizontalTextAlignment="End" FontFamily="OpenSansSemibold" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" BackgroundColor="{StaticResource White}" Spacing="0">
+            <BoxView HeightRequest="1" Color="{StaticResource Border}" />
+            <Button Text="{Binding NextText}" Style="{StaticResource PrimaryButton}" Margin="16,12,16,16"
+                    Command="{Binding NextCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

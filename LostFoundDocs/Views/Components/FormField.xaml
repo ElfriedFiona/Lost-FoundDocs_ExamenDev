@@ -8,7 +8,7 @@
 
         <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasLabel}">
             <Label Text="{Binding LabelText}" Style="{StaticResource FieldLabel}" VerticalOptions="Center" />
-            <Label Text="(facultatif)" Style="{StaticResource Caption}" VerticalOptions="Center" IsVisible="{Binding IsOptional}" />
+            <Label Text="{Binding OptionalText}" Style="{StaticResource Caption}" VerticalOptions="Center" IsVisible="{Binding IsOptional}" />
             <Border BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0" Padding="8,2"
                     VerticalOptions="Center" IsVisible="{Binding HasBadge}">
                 <Border.StrokeShape>

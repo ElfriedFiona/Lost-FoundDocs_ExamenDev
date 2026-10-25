@@ -16,6 +16,7 @@ public partial class FormField : ContentView
     public static readonly BindableProperty ErrorTextProperty = Prop(nameof(ErrorText), string.Empty);
     public static readonly BindableProperty BadgeTextProperty = Prop(nameof(BadgeText), string.Empty);
     public static readonly BindableProperty PrefixTextProperty = Prop(nameof(PrefixText), string.Empty);
+    public static readonly BindableProperty OptionalTextProperty = Prop(nameof(OptionalText), "(facultatif)");
     public static readonly BindableProperty IsOptionalProperty = Prop(nameof(IsOptional), false);
     public static readonly BindableProperty IsPasswordProperty = Prop(nameof(IsPassword), false);
     public static readonly BindableProperty KeyboardProperty = Prop(nameof(Keyboard), Keyboard.Default);
@@ -39,6 +40,7 @@ public partial class FormField : ContentView
     public string ErrorText { get => (string)GetValue(ErrorTextProperty); set => SetValue(ErrorTextProperty, value); }
     public string BadgeText { get => (string)GetValue(BadgeTextProperty); set => SetValue(BadgeTextProperty, value); }
     public string PrefixText { get => (string)GetValue(PrefixTextProperty); set => SetValue(PrefixTextProperty, value); }
+    public string OptionalText { get => (string)GetValue(OptionalTextProperty); set => SetValue(OptionalTextProperty, value); }
     public bool IsOptional { get => (bool)GetValue(IsOptionalProperty); set => SetValue(IsOptionalProperty, value); }
     public bool IsPassword { get => (bool)GetValue(IsPasswordProperty); set => SetValue(IsPasswordProperty, value); }
     public Keyboard Keyboard { get => (Keyboard)GetValue(KeyboardProperty); set => SetValue(KeyboardProperty, value); }

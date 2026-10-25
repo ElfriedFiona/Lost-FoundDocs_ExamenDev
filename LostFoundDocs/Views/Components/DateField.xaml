@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Components.DateField"
+             x:Name="Root">
+    <VerticalStackLayout Spacing="6" BindingContext="{x:Reference Root}">
+        <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasLabel}">
+            <Label Text="{Binding LabelText}" Style="{StaticResource FieldLabel}" VerticalOptions="Center" />
+            <Label Text="(facultatif)" Style="{StaticResource Caption}" VerticalOptions="Center" IsVisible="{Binding IsOptional}" />
+        </HorizontalStackLayout>
+        <Border x:Name="FieldBorder" Stroke="{StaticResource BorderBrush}" StrokeThickness="1"
+                BackgroundColor="{StaticResource White}" Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,Auto" HeightRequest="48">
+                <Entry x:Name="Input" Margin="12,0,0,0" VerticalOptions="Center" Placeholder="jj/mm/aaaa"
+                       Keyboard="Numeric" MaxLength="10" SemanticProperties.Description="{Binding LabelText}" />
+                <Grid Grid.Column="1" WidthRequest="48">
+                    <Label Style="{StaticResource IconLabel}" Text="{x:Static ui:Icons.Calendar}" InputTransparent="True" />
+                    <DatePicker x:Name="Picker" Opacity="0.011" DateSelected="OnPickerDateSelected"
+                                SemanticProperties.Description="Ouvrir le calendrier" />
+                </Grid>
+            </Grid>
+        </Border>
+        <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasError}">
+            <Label Style="{StaticResource IconLabel}" FontSize="16" TextColor="{StaticResource Error}"
+                   Text="{x:Static ui:Icons.CircleAlert}" VerticalOptions="Start" />
+            <Label Text="{Binding DisplayError}" TextColor="{StaticResource ErrorText}" FontSize="13" />
+        </HorizontalStackLayout>
+        <Label Text="{Binding HelperText}" Style="{StaticResource Caption}" IsVisible="{Binding ShowHelper}" />
+    </VerticalStackLayout>
+</ContentView>

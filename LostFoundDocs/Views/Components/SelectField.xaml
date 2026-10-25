@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Components.SelectField"
+             x:Name="Root">
+    <VerticalStackLayout Spacing="6" BindingContext="{x:Reference Root}">
+        <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasLabel}">
+            <Label Text="{Binding LabelText}" Style="{StaticResource FieldLabel}" VerticalOptions="Center" />
+            <Label Text="(facultatif)" Style="{StaticResource Caption}" VerticalOptions="Center" IsVisible="{Binding IsOptional}" />
+        </HorizontalStackLayout>
+        <Border x:Name="FieldBorder" Stroke="{StaticResource BorderBrush}" StrokeThickness="1"
+                BackgroundColor="{StaticResource White}" Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,Auto" HeightRequest="48">
+                <Picker x:Name="PickerView" Margin="12,0,0,0" VerticalOptions="Center"
+                        TextColor="{StaticResource TextPrimary}" TitleColor="{StaticResource Placeholder}"
+                        FontFamily="OpenSansRegular" FontSize="16" BackgroundColor="Transparent"
+                        SelectedIndexChanged="OnIndexChanged" />
+                <Label Grid.Column="1" Style="{StaticResource IconLabel}" Padding="14,0" InputTransparent="True"
+                       Text="{x:Static ui:Icons.ChevronDown}" />
+            </Grid>
+        </Border>
+        <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasError}">
+            <Label Style="{StaticResource IconLabel}" FontSize="16" TextColor="{StaticResource Error}"
+                   Text="{x:Static ui:Icons.CircleAlert}" VerticalOptions="Start" />
+            <Label Text="{Binding ErrorText}" TextColor="{StaticResource ErrorText}" FontSize="13" />
+        </HorizontalStackLayout>
+        <Label Text="{Binding HelperText}" Style="{StaticResource Caption}" IsVisible="{Binding ShowHelper}" />
+    </VerticalStackLayout>
+</ContentView>

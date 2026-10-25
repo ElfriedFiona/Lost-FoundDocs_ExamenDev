@@ -2,7 +2,7 @@ namespace LostFoundDocs.Services.Navigation;
 
 public static class Routes
 {
-    // Disponibles dès la phase A
+    // Onglets et écrans racine
     public const string Splash = "splash";
     public const string Login = "login";
     public const string Register = "register";
@@ -12,11 +12,34 @@ public static class Routes
     public const string Messages = "messages";
     public const string Profile = "profile";
 
-    // Prévues en phase B (tant qu'elles ne sont pas déclarées, la navigation affiche « Bientôt disponible »)
+    // Déclarations
     public const string DeclareLost = "declare-lost";
     public const string DeclareFound = "declare-found";
-    public const string Notifications = "notifications";
+    public const string DeclarationConfirmation = "declaration-confirmation";
+
+    // Recherche et correspondances
+    public const string Search = "search";
+    public const string MatchResult = "match-result";
+    public const string NoMatch = "no-match";
+    public const string MatchDetails = "match-details";
+
+    // Signalements, messages, notifications
     public const string ReportDetails = "report-details";
+    public const string Conversation = "conversation";
+    public const string Notifications = "notifications";
+
+    // Restitution
+    public const string Restitution = "restitution";
+    public const string Restituted = "restituted";
+    public const string Receipt = "receipt";
+
+    // Profil
+    public const string PersonalInfo = "personal-info";
+    public const string Security = "security";
+    public const string NotificationPrefs = "notification-prefs";
+    public const string Privacy = "privacy";
+    public const string Help = "help";
+    public const string About = "about";
 
     private static readonly HashSet<string> Available = new()
     {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Declaration.DeclareFoundPage"
+             Shell.NavBarIsVisible="False" Title="Document trouvé">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <comp:BackHeader Title="Document trouvé" BackCommand="{Binding BackCommand}" Margin="8,8,8,0" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="18">
+                <Label Text="Merci de contribuer à restituer ce document à son propriétaire." Style="{StaticResource Subtitle}" />
+                <comp:InfoBanner Kind="Info" Title="Ne renseignez que les informations visibles sur le document."
+                                 Message="Aucun champ n’est indispensable : quelques informations suffisent au système pour trouver le propriétaire."
+                                 IconGlyph="{x:Static ui:Icons.Eye}" />
+                <comp:InfoBanner Kind="Error" Message="{Binding FormError}" IsVisible="{Binding HasFormError}" />
+
+                <comp:SelectField LabelText="Type de document" Placeholder="Sélectionnez un type"
+                                  Items="{Binding TypeLabels}" SelectedItem="{Binding SelectedTypeLabel, Mode=TwoWay}"
+                                  ErrorText="{Binding TypeError}" />
+
+                <VerticalStackLayout Spacing="16" IsVisible="{Binding HasType}">
+                    <Label Text="Informations visibles sur le document" Style="{StaticResource SectionTitle}" />
+                    <comp:FormField LabelText="Intitulé du document" Placeholder="Ex. Attestation de résidence"
+                                    IsVisible="{Binding IsOtherType}"
+                                    Text="{Binding CustomTitle, Mode=TwoWay}" ErrorText="{Binding CustomTitleError}" />
+                    <comp:FormField LabelText="Nom complet visible sur le document" IsOptional="True" OptionalText="(si visible)"
+                                    Placeholder="Ex. Aïcha Mbarga"
+                                    Text="{Binding HolderName, Mode=TwoWay}" ErrorText="{Binding NameError}" />
+                    <comp:FormField LabelText="{Binding NumberLabel}" IsOptional="True" OptionalText="(si visible)"
+                                    Placeholder="{Binding NumberPlaceholder}"
+                                    HelperText="Seuls les 4 derniers caractères seront affichés."
+                                    Text="{Binding Number, Mode=TwoWay}" ErrorText="{Binding NumberError}" />
+                    <comp:FormField LabelText="{Binding IssuerLabel}" IsOptional="True" OptionalText="(si visible)"
+                                    Placeholder="{Binding IssuerPlaceholder}" Text="{Binding Issuer, Mode=TwoWay}" />
+                    <comp:DateField LabelText="Date de naissance" IsOptional="True"
+                                    HelperText="Seulement si elle est visible. Jamais affichée en entier."
+                                    SelectedDate="{Binding BirthDate, Mode=TwoWay}" ErrorText="{Binding BirthError}" />
+
+                    <Label Text="Où et quand l’avez-vous trouvé ?" Style="{StaticResource SectionTitle}" Margin="0,8,0,0" />
+                    <comp:DateField LabelText="Date de découverte" SelectedDate="{Binding EventDate, Mode=TwoWay}"
+                                    ErrorText="{Binding DateError}" />
+                    <comp:SelectField LabelText="Ville" Items="{Binding CityOptions}" SelectedItem="{Binding City, Mode=TwoWay}" />
+                    <comp:FormField LabelText="Lieu de la découverte" Placeholder="Ex. Université de Douala"
+                                    Text="{Binding Place, Mode=TwoWay}" ErrorText="{Binding PlaceError}" />
+                    <comp:ChipGroup Items="{Binding QuickPlaces}" ItemTappedCommand="{Binding PlaceChipCommand}" />
+                    <comp:NotesField LabelText="Informations complémentaires" IsOptional="True"
+                                     Placeholder="Ex. trouvé dans une pochette bleue"
+                                     HelperText="N’indiquez aucun numéro de document complet ici."
+                                     Text="{Binding Notes, Mode=TwoWay}" ErrorText="{Binding NotesError}" />
+
+                    <Label Text="Photo" Style="{StaticResource SectionTitle}" Margin="0,8,0,0" />
+                    <Button Text="Ajouter une photo du document" Style="{StaticResource SoftButton}"
+                            Command="{Binding PickPhotoCommand}" IsVisible="{Binding HasNoPhoto}" />
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasPhoto}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding PhotoName}" VerticalOptions="Center" FontFamily="OpenSansSemibold" FontSize="14" />
+                            <Button Grid.Column="1" Text="Supprimer" Style="{StaticResource TextButton}" Command="{Binding RemovePhotoCommand}" />
+                        </Grid>
+                    </Border>
+                    <Label Text="La photo n’est pas affichée publiquement. Contact : uniquement via la messagerie sécurisée de l’application."
+                           Style="{StaticResource Caption}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" BackgroundColor="{StaticResource White}" Spacing="0">
+            <BoxView HeightRequest="1" Color="{StaticResource Border}" />
+            <Button Text="{Binding SubmitText}" Style="{StaticResource PrimaryButton}" Margin="16,12,16,16"
+                    Command="{Binding SubmitCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

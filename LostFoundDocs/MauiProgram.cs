@@ -5,6 +5,7 @@ using LostFoundDocs.ViewModels;
 using LostFoundDocs.Views.Auth;
 using LostFoundDocs.Views.Home;
 using LostFoundDocs.Views.Shared;
+using LostFoundDocs.Views.Declaration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -24,7 +25,7 @@ public static class MauiProgram
                 fonts.AddFont("lucide.ttf", "Lucide"); // police d'icônes (voir THIRD_PARTY_NOTICES.md)
             });
 
-        ConfigureBorderlessEntry();
+        ConfigureNativeFields();
         RegisterServices(builder.Services);
         RegisterViewModelsAndPages(builder.Services);
 
@@ -37,7 +38,7 @@ public static class MauiProgram
     private static void RegisterServices(IServiceCollection services)
     {
         // SIMULATION (frontend uniquement) : implémentations en mémoire.
-        // Phase backend : remplacer uniquement ces deux lignes par des implémentations HTTP.
+        // Phase backend : remplacer ces enregistrements par des implémentations HTTP des mêmes interfaces.
         services.AddSingleton<IAuthService, MockAuthService>();
         services.AddSingleton<IReportService, MockReportService>();
 
@@ -52,6 +53,9 @@ public static class MauiProgram
         services.AddTransient<ForgotPasswordViewModel>();
         services.AddTransient<HomeViewModel>();
         services.AddTransient<ProfileViewModel>();
+        services.AddTransient<DeclareLostViewModel>();
+        services.AddTransient<DeclareFoundViewModel>();
+        services.AddTransient<DeclarationConfirmationViewModel>();
 
         services.AddTransient<SplashPage>();
         services.AddTransient<LoginPage>();
@@ -61,13 +65,16 @@ public static class MauiProgram
         services.AddTransient<ReportsPage>();
         services.AddTransient<MessagesPage>();
         services.AddTransient<ProfilePage>();
+        services.AddTransient<DeclareLostPage>();
+        services.AddTransient<DeclareFoundPage>();
+        services.AddTransient<DeclarationConfirmationPage>();
     }
 
     /// <summary>
-    /// Les champs de saisie dessinent leur propre cadre (composant FormField) :
-    /// on retire donc le trait natif sous les Entry sur Android et Windows.
+    /// Les champs dessinent leur propre cadre (composants FormField, SelectField, DateField) :
+    /// on retire donc le trait natif sous les Entry et les Picker sur Android et Windows.
     /// </summary>
-    private static void ConfigureBorderlessEntry()
+    private static void ConfigureNativeFields()
     {
         EntryHandler.Mapper.AppendToMapping("BorderlessEntry", (handler, view) =>
         {
@@ -82,6 +89,17 @@ public static class MauiProgram
             textBox.Resources["TextControlBorderThemeThicknessFocused"] = new Microsoft.UI.Xaml.Thickness(0);
             textBox.Resources["TextControlBackgroundFocused"] = transparent;
             textBox.Resources["TextControlBackgroundPointerOver"] = transparent;
+#endif
+        });
+
+        PickerHandler.Mapper.AppendToMapping("BorderlessPicker", (handler, view) =>
+        {
+#if ANDROID
+            handler.PlatformView.BackgroundTintList =
+                Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#elif WINDOWS
+            handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+            handler.PlatformView.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
 #endif
         });
     }

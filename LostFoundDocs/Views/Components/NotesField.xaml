@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Components.NotesField"
+             x:Name="Root">
+    <VerticalStackLayout Spacing="6" BindingContext="{x:Reference Root}">
+        <HorizontalStackLayout Spacing="6">
+            <Label Text="{Binding LabelText}" Style="{StaticResource FieldLabel}" VerticalOptions="Center" />
+            <Label Text="(facultatif)" Style="{StaticResource Caption}" VerticalOptions="Center" IsVisible="{Binding IsOptional}" />
+        </HorizontalStackLayout>
+        <Border x:Name="FieldBorder" Stroke="{StaticResource BorderBrush}" StrokeThickness="1"
+                BackgroundColor="{StaticResource White}" Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Editor x:Name="Input" HeightRequest="96" Margin="8,4" AutoSize="Disabled"
+                    Text="{Binding Text, Mode=TwoWay}" Placeholder="{Binding Placeholder}" MaxLength="300"
+                    SemanticProperties.Description="{Binding LabelText}" />
+        </Border>
+        <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasError}">
+            <Label Style="{StaticResource IconLabel}" FontSize="16" TextColor="{StaticResource Error}"
+                   Text="{x:Static ui:Icons.CircleAlert}" VerticalOptions="Start" />
+            <Label Text="{Binding ErrorText}" TextColor="{StaticResource ErrorText}" FontSize="13" />
+        </HorizontalStackLayout>
+        <Label Text="{Binding HelperText}" Style="{StaticResource Caption}" IsVisible="{Binding ShowHelper}" />
+    </VerticalStackLayout>
+</ContentView>
