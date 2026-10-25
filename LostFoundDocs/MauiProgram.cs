@@ -9,6 +9,7 @@ using LostFoundDocs.Views.Declaration;
 using LostFoundDocs.Views.Matching;
 using LostFoundDocs.Views.Messages;
 using LostFoundDocs.Views.Reports;
+using LostFoundDocs.Views.Restitution;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -76,6 +77,9 @@ public static class MauiProgram
         services.AddTransient<MessagesViewModel>();
         services.AddTransient<ConversationViewModel>();
         services.AddTransient<NotificationsViewModel>();
+        services.AddTransient<RestitutionViewModel>();
+        services.AddTransient<RestitutedViewModel>();
+        services.AddTransient<ReceiptViewModel>();
 
         services.AddTransient<SplashPage>();
         services.AddTransient<LoginPage>();
@@ -95,6 +99,9 @@ public static class MauiProgram
         services.AddTransient<ReportDetailsPage>();
         services.AddTransient<ConversationPage>();
         services.AddTransient<NotificationsPage>();
+        services.AddTransient<RestitutionPage>();
+        services.AddTransient<RestitutedPage>();
+        services.AddTransient<ReceiptPage>();
     }
 
     /// <summary>

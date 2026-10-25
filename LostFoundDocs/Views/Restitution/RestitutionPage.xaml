@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:comp="clr-namespace:LostFoundDocs.Views.Components" xmlns:ui="clr-namespace:LostFoundDocs.UI"
+             x:Class="LostFoundDocs.Views.Restitution.RestitutionPage"
+             Shell.NavBarIsVisible="False" Title="Restitution du document">
+    <Grid RowDefinitions="Auto,*">
+        <comp:BackHeader Title="Restitution du document" Margin="8,8,8,0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,8,16,24" Spacing="16">
+                <Border Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="48" HeightRequest="48" BackgroundColor="{StaticResource PrimarySoft}" StrokeThickness="0" VerticalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource IconLabel}" TextColor="{StaticResource Primary}" Text="{x:Static ui:Icons.Award}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="{Binding DocumentTitle}" Style="{StaticResource CardTitle}" />
+                            <Label Text="{Binding Reference}" Style="{StaticResource Caption}" />
+                            <comp:StatusBadge Text="{Binding StatusLabel}" Kind="{Binding StatusKind}" Margin="0,2,0,0" />
+                            <Label Text="{Binding MatchLine}" Style="{StaticResource Caption}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <comp:InfoBanner Kind="Error" Message="{Binding ActionError}" IsVisible="{Binding HasActionError}" />
+
+                <!-- Restitution déjà effectuée / impossible -->
+                <comp:InfoBanner Kind="Success" Title="Document restitué" Message="La restitution a été enregistrée." IsVisible="{Binding ShowReturned}" />
+                <Button Text="Voir la preuve de restitution" Style="{StaticResource PrimaryButton}" Command="{Binding ProofCommand}" IsVisible="{Binding ShowReturned}" />
+                <comp:InfoBanner Kind="Warning" Message="La restitution n’est pas possible dans l’état actuel de ce signalement." IsVisible="{Binding ShowUnavailable}" />
+
+                <!-- Choix du lieu et du créneau -->
+                <VerticalStackLayout Spacing="14" IsVisible="{Binding ShowChoose}">
+                    <Label Text="Organisation de la restitution" Style="{StaticResource SectionTitle}" />
+                    <Label Text="{Binding Intro}" Style="{StaticResource Subtitle}" FontSize="14" />
+                    <Label Text="Lieu recommandé" Style="{StaticResource FieldLabel}" />
+                    <comp:OptionList Items="{Binding PlaceOptions}" SelectedItem="{Binding SelectedPlace, Mode=TwoWay}" />
+                    <Label Text="Date et heure" Style="{StaticResource FieldLabel}" />
+                    <comp:ChipGroup Items="{Binding DayOptions}" SelectedItem="{Binding SelectedDay, Mode=TwoWay}" SelectOnTap="True" />
+                    <comp:ChipGroup Items="{Binding HourOptions}" SelectedItem="{Binding SelectedHour, Mode=TwoWay}" SelectOnTap="True" />
+                    <comp:InfoBanner Kind="Error" Message="{Binding ChoiceError}" IsVisible="{Binding HasChoiceError}" />
+                    <Button Text="{Binding ProposeText}" Style="{StaticResource SoftButton}" Command="{Binding ProposeCommand}" />
+                </VerticalStackLayout>
+
+                <!-- Côté propriétaire : aucune proposition reçue -->
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding ShowSimulate}">
+                    <Label Text="Organisation de la restitution" Style="{StaticResource SectionTitle}" />
+                    <comp:InfoBanner Kind="Info" Title="Aucune proposition reçue pour l’instant"
+                                     Message="La personne qui a trouvé votre document doit vous proposer un lieu public et un créneau." />
+                    <comp:InfoBanner Kind="Warning" Title="Démonstration"
+                                     Message="Vous pouvez simuler l’arrivée de sa proposition (aucune vraie personne n’est contactée)." />
+                    <Button Text="Simuler la proposition de rendez-vous" Style="{StaticResource SoftButton}" Command="{Binding SimulateProposalCommand}" />
+                </VerticalStackLayout>
+
+                <!-- Proposition courante -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding ShowProposalCard}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding ProposalOrigin}" Style="{StaticResource Caption}" />
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Style="{StaticResource IconLabel}" FontSize="20" TextColor="{StaticResource Primary}" Text="{x:Static ui:Icons.MapPin}" />
+                            <Label Text="{Binding ProposalPlace}" FontFamily="OpenSansSemibold" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Style="{StaticResource IconLabel}" FontSize="20" TextColor="{StaticResource Primary}" Text="{x:Static ui:Icons.Calendar}" />
+                            <Label Text="{Binding ProposalSlot}" FontFamily="OpenSansSemibold" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+                <VerticalStackLayout Spacing="10" IsVisible="{Binding ShowPending}">
+                    <Button Text="Accepter ce rendez-vous" Style="{StaticResource PrimaryButton}" Command="{Binding AcceptCommand}" />
+                    <Button Text="Proposer un autre créneau" Style="{StaticResource SecondaryButton}" Command="{Binding CounterCommand}" />
+                </VerticalStackLayout>
+                <Button Text="{Binding ConfirmText}" Style="{StaticResource PrimaryButton}" Command="{Binding ConfirmCommand}" IsVisible="{Binding ShowConfirm}" />
+                <Button Text="Modifier le rendez-vous" Style="{StaticResource TextButton}" Command="{Binding EditCommand}" IsVisible="{Binding ShowEdit}" />
+
+                <Button Text="Ouvrir la conversation" Style="{StaticResource TextButton}" HorizontalOptions="Start"
+                        Command="{Binding ConversationCommand}" IsVisible="{Binding CanOpenConversation}" />
+
+                <comp:InfoBanner Kind="Warning" Title="Conseils de sécurité" IconGlyph="{x:Static ui:Icons.ShieldCheck}"
+                                 Message="Rencontrez-vous dans un lieu public, de jour. Aucune somme d’argent ne doit être demandée." />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

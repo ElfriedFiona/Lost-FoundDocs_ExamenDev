@@ -4,6 +4,7 @@ using LostFoundDocs.Views.Declaration;
 using LostFoundDocs.Views.Matching;
 using LostFoundDocs.Views.Messages;
 using LostFoundDocs.Views.Reports;
+using LostFoundDocs.Views.Restitution;
 
 namespace LostFoundDocs;
 
@@ -26,8 +27,11 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(Routes.ReportDetails, typeof(ReportDetailsPage));
         Routing.RegisterRoute(Routes.Conversation, typeof(ConversationPage));
         Routing.RegisterRoute(Routes.Notifications, typeof(NotificationsPage));
+        Routing.RegisterRoute(Routes.Restitution, typeof(RestitutionPage));
+        Routing.RegisterRoute(Routes.Restituted, typeof(RestitutedPage));
+        Routing.RegisterRoute(Routes.Receipt, typeof(ReceiptPage));
 
         // Les routes livrées cessent d'afficher « Bientôt disponible ».
-        Routes.MarkAvailable(Routes.DeclareLost, Routes.DeclareFound, Routes.DeclarationConfirmation, Routes.Search, Routes.MatchResult, Routes.NoMatch, Routes.MatchDetails, Routes.ReportDetails, Routes.Conversation, Routes.Notifications);
+        Routes.MarkAvailable(Routes.DeclareLost, Routes.DeclareFound, Routes.DeclarationConfirmation, Routes.Search, Routes.MatchResult, Routes.NoMatch, Routes.MatchDetails, Routes.ReportDetails, Routes.Conversation, Routes.Notifications, Routes.Restitution, Routes.Restituted, Routes.Receipt);
     }
 }
